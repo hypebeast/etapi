@@ -1,33 +1,37 @@
 
 {% extends "layout.html" %}
+{% block page_title %}
+    Dashboard - EtaPI
+{% endblock %}
+{% block meta_description %}
+    EtaPI - A RaspberryPi based, Flask powered monitor for ETA Heizkessels.
+{% endblock %}
 {% block content %}
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-
-  <h1>Welcome to etapi</h1>
-
-  <p>This is a starter Flask template. It includes Bootstrap 3, jQuery 2, Flask-SQLAlchemy, WTForms, and various testing utilities out of the box.</p>
-  <p><a href="https://github.com/sloria/cookiecutter-flask" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-</div><!-- /.jumbotron -->
-
-<div class="body-content">
-  <div class="row">
-    <div class="col-lg-4">
-      <h2><i class="fa fa-code"></i> Bootstrap 3</h2>
-      <p>Sleek, intuitive, and powerful mobile-first front-end framework for faster and easier web development.</p>
-      <p><a class="btn btn-default" href="http://getbootstrap.com/">Official website &raquo;</a></p>
+  <div id="page-wrapper">
+    <div class="row">
+      <div class="col-sm-12">
+      <h1 class="page-header">Dashboard</h1>
+      </div>
     </div>
-    <div class="col-lg-4">
-      <h2><i class="fa fa-flask"></i> SQLAlchemy</h2>
-      <p>SQLAlchemy is the Python SQL toolkit and Object Relational Mapper that gives application developers the full power and flexibility of SQL.</p>
-      <p><a href="http://www.sqlalchemy.org/" class="btn btn-default" href="#">Official website &raquo;</a></p>
-   </div>
-    <div class="col-lg-4">
-      <h2><i class="fa fa-edit"></i> WTForms</h2>
-      <p>WTForms is a flexible forms validation and rendering library for python web development.</p>
-      <p><a href="http://wtforms.simplecodes.com/" class="btn btn-default" href="#">Official website &raquo;</a></p>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-comments fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">23 °C</div>
+                  <div>Temperature</div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div><!-- /.row -->
-</div>
+
+  </div>
 {% endblock %}
 

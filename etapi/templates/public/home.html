@@ -3,9 +3,6 @@
 {% block page_title %}
     Dashboard - EtaPI
 {% endblock %}
-{% block meta_description %}
-    EtaPI - A RaspberryPi based, Flask powered monitor for ETA Heizkessels.
-{% endblock %}
 {% block content %}
   <div id="page-wrapper">
     <div class="row">
@@ -20,13 +17,117 @@
           <div class="panel-heading">
               <div class="row">
                 <div class="col-xs-3">
-                  <i class="fa fa-comments fa-5x"></i>
+                  <i class="wi wi-thermometer fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">23 °C</div>
-                  <div>Temperature</div>
+                  <div class="huge">{{ '%0.1f'| format(current_temp|float) if current_temp != None }} °C</div>
+                  <div>Aktuelle Temperature</div>
                 </div>
               </div>
+          </div>
+          <div class="panel-footer">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="wi wi-thermometer fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{ '%0.1f'| format(max_temp_today|float) if max_temp_today != None }} °C</div>
+                  <div>Max. Temp Today</div>
+                </div>
+              </div>
+          </div>
+          <div class="panel-footer">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="wi wi-thermometer fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{ '%0.1f'| format(min_temp_today|float) if min_temp_today != None }} °C</div>
+                  <div>Min. Temp Today</div>
+                </div>
+              </div>
+          </div>
+          <div class="panel-footer">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="wi wi-thermometer fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{ '%0.1f'| format(avg_temp_today|float) if avg_temp_today != None }} °C</div>
+                  <div>Min. Temp Today</div>
+                </div>
+              </div>
+          </div>
+          <div class="panel-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-info fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{ pellets_today }} kg</div>
+                  <div>Pellets Verbrauch Heute</div>
+                </div>
+              </div>
+          </div>
+          <div class="panel-footer">
+            <a href="#">
+              <span class="pull-left">Last 7 Days</span>
+              <span class="pull-right">kg</span>
+              <div class="clearfix"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-info fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">kg</div>
+                  <div>Pellets Lagervorrat</div>
+                </div>
+              </div>
+          </div>
+          <div class="panel-footer">
+            <a href="#">
+              <span class="pull-left">Total Pellets Usage</span>
+              <span class="pull-right">kg</span>
+              <div class="clearfix"></div>
+            </a>
           </div>
         </div>
       </div>

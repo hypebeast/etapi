@@ -12,19 +12,27 @@ from etapi.extensions import (
     migrate,
     debug_toolbar,
 )
-from etapi import public, user
 
+from .public import public
 
-def create_app(config_object=ProdConfig):
+DEFAULT_BLUEPRINTS = (
+    public,
+)
+
+def create_app(config_object=ProdConfig, blueprints=None):
     '''An application factory, as explained here:
         http://flask.pocoo.org/docs/patterns/appfactories/
 
     :param config_object: The configuration object to use.
     '''
+
+    if blueprints is None:
+        blueprints = DEFAULT_BLUEPRINTS
+
     app = Flask(__name__)
     app.config.from_object(config_object)
     register_extensions(app)
-    register_blueprints(app)
+    register_blueprints(app, blueprints)
     register_errorhandlers(app)
     return app
 
@@ -40,9 +48,12 @@ def register_extensions(app):
     return None
 
 
-def register_blueprints(app):
-    app.register_blueprint(public.views.blueprint)
-    app.register_blueprint(user.views.blueprint)
+def register_blueprints(app, blueprints):
+    """
+    Register blueprints in views.
+    """
+    for blueprint in blueprints:
+        app.register_blueprint(blueprint)
     return None
 
 

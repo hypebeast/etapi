@@ -48,3 +48,6 @@ env*
 
 # Bower components
 etapi/static/libs
+
+# SQLite dev database
+dev.db

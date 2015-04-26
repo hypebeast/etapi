@@ -8,8 +8,11 @@ from flask_migrate import MigrateCommand
 
 from etapi.app import create_app
 from etapi.user.models import User
+from etapi.weather.models import Weather
+from etapi.kesseldata.models import Kessel
 from etapi.settings import DevConfig, ProdConfig
 from etapi.database import db
+from scripts.testData import createWeatherData, createKesselData
 
 if os.environ.get("ETAPI_ENV") == 'prod':
     app = create_app(ProdConfig)
@@ -33,6 +36,27 @@ def test():
     import pytest
     exit_code = pytest.main([TEST_PATH, '--verbose'])
     return exit_code
+
+@manager.command
+def loadtestdata():
+    weather_data = createWeatherData()
+    for x in weather_data:
+        weather = Weather(temp=x['value'], created_at=x['date'])
+        db.session.add(weather)
+
+    kessel_data = createKesselData()
+    for x in kessel_data:
+        data = Kessel(created_at=x['date'],
+                        pellets_total=x['pellets_total'],
+                        pellets_stock=x['pellets_stock'])
+        db.session.add(data)
+
+    db.session.commit()
+
+@manager.command
+def resetdb():
+    db.drop_all()
+    db.create_all()
 
 manager.add_command('server', Server())
 manager.add_command('shell', Shell(make_context=_make_context))

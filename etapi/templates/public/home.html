@@ -75,7 +75,7 @@
                 </div>
                 <div class="col-xs-9 text-right">
                   <div class="huge">{{ '%0.1f'| format(avg_temp_today|float) if avg_temp_today != None }} °C</div>
-                  <div>Min. Temp Today</div>
+                  <div>Avg. Temp Today</div>
                 </div>
               </div>
           </div>
@@ -102,7 +102,7 @@
           <div class="panel-footer">
             <a href="#">
               <span class="pull-left">Last 7 Days</span>
-              <span class="pull-right">kg</span>
+              <span class="pull-right">{{ pellets_last_week }} kg</span>
               <div class="clearfix"></div>
             </a>
           </div>
@@ -117,20 +117,62 @@
                   <i class="fa fa-info fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">kg</div>
-                  <div>Pellets Lagervorrat</div>
+                  <div class="huge">{{ pellets_kessel_stock }} kg</div>
+                  <div>Pellets Kesselvorrat</div>
                 </div>
               </div>
           </div>
           <div class="panel-footer">
             <a href="#">
-              <span class="pull-left">Total Pellets Usage</span>
-              <span class="pull-right">kg</span>
+              <span class="pull-left">Total Pellets Consumption</span>
+              <span class="pull-right">{{ pellets_total_consumption }} kg</span>
               <div class="clearfix"></div>
             </a>
           </div>
         </div>
       </div>
+
+       <div class="col-md-6 col-lg-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-info fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{ pellets_total_stock }} kg</div>
+                  <div>Pellets Lagervorrat</div>
+                </div>
+              </div>
+          </div>
+          <div class="panel-footer">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-3">
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-3">
+                  <i class="fa fa-info fa-5x"></i>
+                </div>
+                <div class="col-xs-9 text-right">
+                  <div class="huge">{{ operating_hours }} h</div>
+                  <div>Betriebsstunden</div>
+                </div>
+              </div>
+          </div>
+          <div class="panel-footer">
+          <a href="#">
+              <span class="pull-left">In den letzten 7 Tagen</span>
+              <span class="pull-right">{{ operating_hours_last_week }} h</span>
+              <div class="clearfix"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
 
   </div>

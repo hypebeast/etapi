@@ -4,7 +4,13 @@ from flask import (Blueprint, request, render_template, flash, url_for,
 
 from etapi.database import db
 from etapi.weather.helpers import get_current_weather, get_max_temp_today, get_min_temp_today, get_average_temp_today
-from etapi.kesseldata.helpers import get_pellets_usage_today
+from etapi.kesseldata.helpers import get_pellets_consumption_today
+from etapi.kesseldata.helpers import get_pellets_consumption_last_n_days
+from etapi.kesseldata.helpers import get_pellets_total_consumption
+from etapi.kesseldata.helpers import get_pellets_kessel_stock
+from etapi.kesseldata.helpers import get_pellets_total_stock
+from etapi.kesseldata.helpers import get_operating_hours_total
+from etapi.kesseldata.helpers import get_operating_hours_last_n_days
 
 public = Blueprint('public', __name__, static_folder="../static")
 
@@ -16,12 +22,21 @@ def home():
     min_temp = get_min_temp_today()
     avg_temp = get_average_temp_today()
 
-    pellets_today = get_pellets_usage_today()
+    pellets_today = get_pellets_consumption_today()
+    pellets_last_week = get_pellets_consumption_last_n_days(7)
+    pellets_kessel_stock = get_pellets_kessel_stock()
+    pellets_total_consumption = get_pellets_total_consumption()
+    pellets_total_stock = get_pellets_total_stock()
+    operating_hours = get_operating_hours_total()
+    operating_hours_last_week = get_operating_hours_last_n_days()
 
     return render_template("public/home.html",
                             current_temp=current_temp, max_temp_today=max_temp,
                             min_temp_today=min_temp, avg_temp_today=avg_temp,
-                            pellets_today=pellets_today)
+                            pellets_today=pellets_today, pellets_last_week=pellets_last_week,
+                            pellets_kessel_stock=pellets_kessel_stock, pellets_total_consumption=pellets_total_consumption,
+                            pellets_total_stock=pellets_total_stock,
+                            operating_hours=operating_hours, operating_hours_last_week=operating_hours_last_week)
 
 @public.route("/about/")
 def about():

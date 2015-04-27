@@ -9,10 +9,10 @@ from flask_migrate import MigrateCommand
 from etapi.app import create_app
 from etapi.user.models import User
 from etapi.weather.models import Weather
-from etapi.kesseldata.models import Kessel
+from etapi.kesseldata.models import Kessel, Lager
 from etapi.settings import DevConfig, ProdConfig
 from etapi.database import db
-from scripts.testData import createWeatherData, createKesselData
+from scripts.testData import createWeatherData, createKesselData, createLagerData
 
 if os.environ.get("ETAPI_ENV") == 'prod':
     app = create_app(ProdConfig)
@@ -48,7 +48,14 @@ def loadtestdata():
     for x in kessel_data:
         data = Kessel(created_at=x['date'],
                         pellets_total=x['pellets_total'],
-                        pellets_stock=x['pellets_stock'])
+                        pellets_stock=x['pellets_stock'],
+                        operating_hours=x['operating_hours'])
+        db.session.add(data)
+
+    lager_data = createLagerData()
+    for x in lager_data:
+        data = Lager(created_at=x['date'],
+                        stock=x['stock'])
         db.session.add(data)
 
     db.session.commit()

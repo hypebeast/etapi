@@ -20,13 +20,25 @@ def createKesselData(start_date=datetime.utcnow() - timedelta(days=7),
                         end_date=datetime.utcnow()):
     data = []
     pellets_total = 2000
+    operating_hours = 143 * 24 * 60 * 60
     for x in daterange(start_date, end_date, timedelta(minutes=5)):
         pellets_total += 1
         pellets_stock = int(random.uniform(0, 60))
-        data.append({'date': x, 'pellets_total': pellets_total, 'pellets_stock': pellets_stock})
+        operating_hours += 300
+        data.append({'date': x, 'pellets_total': pellets_total, 'pellets_stock': pellets_stock, 'operating_hours': int(operating_hours/3600)})
 
     return data
 
+def createLagerData(start_date=datetime.utcnow() - timedelta(days=7),
+                        end_date=datetime.utcnow()):
+    data = []
+    stock = 10000.0
+    delta = 0.1
+    for x in daterange(start_date, end_date, timedelta(minutes=5)):
+        stock -= delta
+        data.append({'date': x, 'stock': int(stock)})
+
+    return data
 
 if __name__ == '__main__':
     data = createWeatherData()

@@ -24,7 +24,7 @@ class Lager(SurrogatePK, Model):
 
     id = Column(db.Integer(), nullable=False, primary_key=True)
     created_at = Column(db.Text(), nullable=False, default=dt.datetime.utcnow)
-    remaining_stock = Column(db.Integer, nullable=True)
+    stock = Column(db.Integer, nullable=True)
 
 
 def __init__(self):

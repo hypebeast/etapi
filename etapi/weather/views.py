@@ -24,6 +24,7 @@ def index(date=get_todays_date().strftime('%Y-%m-%d')):
 
     temp_data = get_daily_temperature_series(current_date)
     timestamps_temp = get_timestamps(temp_data)
+    timestamps_temp = [str(x).rstrip('L') for x in timestamps_temp]
 
     daily_chart_data = [list(x) for x in zip(timestamps_temp, [(float(d.temp or 0 )) for d in temp_data])]
 

@@ -13,7 +13,7 @@ class Weather(SurrogatePK, Model):
     __tablename__ = 'weather_data'
 
     id = Column(db.Integer(), nullable=False, primary_key=True)
-    created_at = Column(db.Text(), nullable=False, default=dt.datetime.utcnow)
+    created_at = Column(db.DateTime(), nullable=False, default=dt.datetime.utcnow)
     temp = Column(db.Float(), nullable=True)
 
 

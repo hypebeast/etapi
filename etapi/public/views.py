@@ -18,7 +18,7 @@ public = Blueprint('public', __name__, static_folder="../static")
 @public.route("/")
 def home():
     w = get_current_weather()
-    current_temp = w.temp if w else 0
+    current_temp = w.temp if w else None
     max_temp = get_max_temp_today()
     min_temp = get_min_temp_today()
     avg_temp = get_average_temp_today()

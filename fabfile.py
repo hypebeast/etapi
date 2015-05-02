@@ -61,22 +61,22 @@ def add_remote():
     with lcd(local_app_dir):
         local('git remote add production pi@192.168.0.120:/home/git/etapi.git')
 
-def init_db():
-    """
-    Initialize the database
-    """
-    with cd(remote_app_dir):
-        with prefix(env.activate):
-            run('ETAPI_ENV=prod python manage.py db init')
-
 def create_db():
     """
-    Initialize the database
+    Initialize the database.
     """
     with cd(remote_app_dir):
         with prefix(env.activate):
             if exists(remote_db_dir + "/etapi.db") is False:
                 run('ETAPI_ENV=prod python manage.py createdb')
+
+def drop_db():
+    """
+    Drops the database.
+    """
+    with cd(remote_app_dir):
+        with prefix(env.activate):
+            run('ETAPI_ENV=prod python manage.py dropdb')
 
 def push_changes_to_production():
     with lcd(local_app_dir):
@@ -217,7 +217,6 @@ def bootstrap():
     push_changes_to_production()
     install_pip_requirements()
     create_db()
-    #init_db()
 
 
 ########## END BOOSTRAP

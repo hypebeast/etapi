@@ -16,8 +16,6 @@ if os.environ.get("ETAPI_ENV") == 'prod':
 else:
     app = create_app(DevConfig)
 
-ctx = app.app_context()
-
 API_HOST = "http://192.168.0.108"
 API_PORT = "8080"
 
@@ -48,17 +46,16 @@ def weatherData():
             db.session.add(weather)
             db.session.commit()
 
-
 def main():
     start = datetime.utcnow()
-    print "%s - Start crawling..." % (start.strftime('%Y-%m-%d %H-%M-%S'))
+    print "%s - Start crawling" % (start.strftime('%Y-%m-%d %H:%M:%S'))
 
     weatherData()
     kesselData()
     lagerData()
 
     end = datetime.utcnow()
-    print "%s - DONE" % ((end.strftime('%Y-%m-%d %H-%M-%S')))
+    print "%s - DONE" % ((end.strftime('%Y-%m-%d %H:%M:%S')))
 
 def exit():
     sys.exit(1)

@@ -20,7 +20,7 @@
                   <i class="wi wi-thermometer fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">{{ '%0.1f'| format(current_temp|float) if current_temp != None }} °C</div>
+                  <div class="huge">{{ '%0.1f'| format(current_temp|float) if current_temp != None else '-' }} °C</div>
                   <div>Aktuelle Temperature</div>
                 </div>
               </div>
@@ -38,7 +38,7 @@
                   <i class="wi wi-thermometer fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">{{ '%0.1f'| format(max_temp_today|float) if max_temp_today != None }} °C</div>
+                  <div class="huge">{{ '%0.1f'| format(max_temp_today|float) if max_temp_today != None else '-'}} °C</div>
                   <div>Max. Temp Today</div>
                 </div>
               </div>
@@ -56,7 +56,7 @@
                   <i class="wi wi-thermometer fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">{{ '%0.1f'| format(min_temp_today|float) if min_temp_today != None }} °C</div>
+                  <div class="huge">{{ '%0.1f'| format(min_temp_today|float) if min_temp_today != None else '-'}} °C</div>
                   <div>Min. Temp Today</div>
                 </div>
               </div>
@@ -74,7 +74,7 @@
                   <i class="wi wi-thermometer fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">{{ '%0.1f'| format(avg_temp_today|float) if avg_temp_today != None }} °C</div>
+                  <div class="huge">{{ '%0.1f'| format(avg_temp_today|float) if avg_temp_today != None else '-'}} °C</div>
                   <div>Avg. Temp Today</div>
                 </div>
               </div>
@@ -94,7 +94,7 @@
                   <i class="fa fa-info fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">{{ pellets_today }} kg</div>
+                  <div class="huge">{{ pellets_today or '-'}} kg</div>
                   <div>Pellets Verbrauch Heute</div>
                 </div>
               </div>
@@ -102,7 +102,7 @@
           <div class="panel-footer">
             <a href="#">
               <span class="pull-left">Last 7 Days</span>
-              <span class="pull-right">{{ pellets_last_week }} kg</span>
+              <span class="pull-right">{{ pellets_last_week or '-' }} kg</span>
               <div class="clearfix"></div>
             </a>
           </div>
@@ -117,7 +117,7 @@
                   <i class="fa fa-info fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">{{ pellets_kessel_stock }} kg</div>
+                  <div class="huge">{{ pellets_kessel_stock or '-' }} kg</div>
                   <div>Pellets Kesselvorrat</div>
                 </div>
               </div>
@@ -125,7 +125,7 @@
           <div class="panel-footer">
             <a href="#">
               <span class="pull-left">Total Pellets Consumption</span>
-              <span class="pull-right">{{ pellets_total_consumption }} kg</span>
+              <span class="pull-right">{{ pellets_total_consumption or '-' }} kg</span>
               <div class="clearfix"></div>
             </a>
           </div>
@@ -140,7 +140,7 @@
                   <i class="fa fa-info fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">{{ pellets_total_stock }} kg</div>
+                  <div class="huge">{{ pellets_total_stock or '-' }} kg</div>
                   <div>Pellets Lagervorrat</div>
                 </div>
               </div>
@@ -158,7 +158,7 @@
                   <i class="fa fa-info fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">{{ operating_hours }} h</div>
+                  <div class="huge">{{ operating_hours or '-' }} h</div>
                   <div>Betriebsstunden</div>
                 </div>
               </div>
@@ -166,7 +166,7 @@
           <div class="panel-footer">
           <a href="#">
               <span class="pull-left">In den letzten 7 Tagen</span>
-              <span class="pull-right">{{ operating_hours_last_week }} h</span>
+              <span class="pull-right">{{ operating_hours_last_week or '-' }} h</span>
               <div class="clearfix"></div>
             </a>
           </div>

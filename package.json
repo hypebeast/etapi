@@ -1,0 +1,18 @@
+{
+  "name": "etapi",
+  "version": "0.1.0",
+  "description": "EtaPI is a Raspberry PI based, Flask powered monitor for ETA Heizkessels",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hypebeast/etapi.git"
+  },
+  "author": "Sebastian Ruml",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hypebeast/etapi/issues"
+  },
+  "homepage": "https://github.com/hypebeast/etapi",
+  "devDependencies": {
+    "bower": "^1.4.1"
+  }
+}

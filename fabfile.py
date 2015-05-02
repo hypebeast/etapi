@@ -31,15 +31,24 @@ env.hosts = ['192.168.0.120']
 
 ########## BOOTSTRAP
 
+PACKAGES = (
+    'python',
+    'python-dev',
+    'python-pip',
+    'python-virtualenv',
+    'nginx',
+    'gunicorn',
+    'supervisor',
+    'git',
+    'nodejs',
+    'npm',
+)
+
 def install_requirements():
     """ Install required packages. """
-    sudo('apt-get install -y python')
-    sudo('apt-get install -y python-pip')
-    sudo('apt-get install -y python-virtualenv')
-    sudo('apt-get install -y nginx')
-    sudo('apt-get install -y gunicorn')
-    sudo('apt-get install -y supervisor')
-    sudo('apt-get install -y git')
+    packages = ' '.join(PACKAGES)
+    sudo('apt-get update')
+    sudo('apt-get install -y ' + packages)
 
 def create_project_dir():
     """
@@ -123,7 +132,12 @@ def add_remote():
         local('git remote add production pi@192.168.0.120:/home/git/etapi.git')
 
 def init_db():
-    pass
+    """
+    Initialize the database
+    """
+    with cd(remote_app_dir):
+        run('source env/bin/activate')
+        run('python manage.py db init')
 
 def run_app():
     """ Run the app! """
@@ -164,19 +178,21 @@ def deploy():
             # Install all requirements
             local("echo Installing all requirements")
 
-            sudo('source env/bin/activate')
-            sudo('pip install -r requirements.txt')
-            sudo('npm install')
-            sudo('bower install')
+            run('source env/bin/activate')
+            run('pip install -r requirements.txt')
+            run('npm install')
+            run('bower install')
 
             # TODO: Make migrations
             local("echo Make migrations")
+            run('python manage.py db migrate')
+            run('python manage.py db upgrade')
 
             # Restart app
             local("echo Restarting app")
             sudo('supervisorctl restart etapi')
 
-    local("echo DONE")
+    local("echo DONE DEPLOYING APP TO PRODUCTION")
     local("echo ------------------------")
 
 ########## END DEPLOYMENT

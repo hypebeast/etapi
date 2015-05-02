@@ -12,6 +12,7 @@ from etapi.extensions import (
     migrate,
     debug_toolbar,
 )
+from etapi.utils import pretty_date, pretty_seconds
 
 from .public import public
 from .weather import weather
@@ -37,6 +38,8 @@ def create_app(config_object=ProdConfig, blueprints=None):
     register_extensions(app)
     register_blueprints(app, blueprints)
     register_errorhandlers(app)
+    configure_template_filters(app)
+
     return app
 
 
@@ -58,6 +61,21 @@ def register_blueprints(app, blueprints):
     for blueprint in blueprints:
         app.register_blueprint(blueprint)
     return None
+
+
+def configure_template_filters(app):
+
+    @app.template_filter()
+    def pretty_date(value):
+        return pretty_date(value)
+
+    @app.template_filter('pretty_seconds')
+    def pretty_seconds_filter(value):
+        return pretty_seconds(value)
+
+    @app.template_filter()
+    def format_date(value, format='%Y-%m-%d'):
+        return value.strftime(format)
 
 
 def register_errorhandlers(app):

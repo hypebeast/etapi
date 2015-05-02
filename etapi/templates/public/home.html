@@ -158,7 +158,7 @@
                   <i class="fa fa-info fa-5x"></i>
                 </div>
                 <div class="col-xs-9 text-right">
-                  <div class="huge">{{ operating_hours or '-' }} h</div>
+                  <div class="huge">{{ operating_hours | pretty_seconds if operating_hours or '-' }}</div>
                   <div>Betriebsstunden</div>
                 </div>
               </div>

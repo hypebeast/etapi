@@ -27,6 +27,18 @@ env.activate = "source %s/%s" % (remote_app_dir, "env/bin/activate")
 
 ########## HELPERS
 
+def package_installed(pkg_name):
+    """ref: http:superuser.com/questions/427318/#comment490784_427339"""
+    cmd_f = 'dpkg-query -l "%s" | grep -q ^.i'
+    cmd = cmd_f % (pkg_name)
+    with settings(warn_only=True):
+        result = sudo(cmd)
+    return result.succeeded
+
+def yes_install(pkg_name):
+    """ref: http://stackoverflow.com/a/10439058/1093087"""
+    sudo('apt-get --force-yes --yes install %s' % (pkg_name))
+
 def add_remote():
     """
     Add production Git repository to remotes
@@ -46,7 +58,7 @@ def push_changes_to_production():
     with lcd(local_app_dir):
         local('git push production master')
 
-def install_requirements():
+def install_pip_requirements():
     with cd(remote_app_dir):
         with prefix(env.activate):
             run('pip install -r requirements.txt')
@@ -94,14 +106,15 @@ PACKAGES = (
 
 def install_requirements():
     """ Install required packages. """
-    packages = ' '.join(PACKAGES)
     sudo('apt-get update')
-    sudo('apt-get install -y ' + packages)
+    for package in PACKAGES:
+        if not package_installed(package):
+            yes_install(package)
 
 def create_project_dir():
     """
-    1. Create project directories
-    2. Create and activate a virtualenv
+    1. Create required project directories and files
+    2. Create a virtualenv
     """
     if exists(remote_app_home_dir) is False:
         sudo('mkdir ' + remote_app_home_dir)
@@ -173,13 +186,13 @@ def configure_git():
             sudo('chown pi:pi ' + remote_git_dir + ' -R')
 
 def bootstrap():
-    #install_requirements()
+    install_requirements()
     create_project_dir()
     configure_nginx()
     configure_supervisor()
     configure_git()
     push_changes_to_production()
-    install_requirements()
+    install_pip_requirements()
     init_db()
 
 

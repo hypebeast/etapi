@@ -37,6 +37,10 @@
 {% endblock %}
 
 {% block js %}
+    {% assets "js_weather" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+
     <script>
         $('#side-menu').find('a').each(function (i) {
             $(this).removeClass('active');

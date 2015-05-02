@@ -17,11 +17,16 @@ js = Bundle(
     "libs/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js",
     "libs/highcharts-release/highcharts.js",
     "js/plugins.js",
-    "js/weather-daily-chart.js",
     output="public/js/common.js"
+)
+
+weather_js = Bundle(
+    "js/weather-daily-chart.js",
+    output="public/js/weather_prod.js"
 )
 
 assets = Environment()
 
 assets.register("js_all", js)
 assets.register("css_all", css)
+assets.register("js_weather", weather_js)

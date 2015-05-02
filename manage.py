@@ -42,6 +42,8 @@ def test():
 def loadtestdata():
     weather_data = createWeatherData()
     for x in weather_data:
+        print x['date']
+        print x['value']
         weather = Weather(temp=x['value'], created_at=x['date'])
         db.session.add(weather)
 

@@ -49,9 +49,13 @@ def weatherData():
 
 
 def main():
+    print "Start crawling..."
+
     weatherData()
     kesselData()
     lagerData()
+
+    print "DONE"
 
 def exit():
     sys.exit(1)

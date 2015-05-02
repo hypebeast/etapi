@@ -39,30 +39,26 @@ def test():
 
 @manager.command
 def loadtestdata():
-    with app.app_context():
-        weather_data = createWeatherData()
-        for x in weather_data:
-            print x['date']
-            print x['value']
-            weather = Weather(temp=x['value'], created_at=x['date'])
-            db.session.add(weather)
+    weather_data = createWeatherData()
+    for x in weather_data:
+        weather = Weather(temp=x['value'], created_at=x['date'])
+        db.session.add(weather)
 
-        kessel_data = createKesselData()
-        for x in kessel_data:
-            data = Kessel(created_at=x['date'],
-                            pellets_total=x['pellets_total'],
-                            pellets_stock=x['pellets_stock'],
-                            operating_hours=x['operating_hours'])
-            db.session.add(data)
+    kessel_data = createKesselData()
+    for x in kessel_data:
+        data = Kessel(created_at=x['date'],
+                        pellets_total=x['pellets_total'],
+                        pellets_stock=x['pellets_stock'],
+                        operating_hours=x['operating_hours'])
+        db.session.add(data)
 
-        lager_data = createLagerData()
-        for x in lager_data:
-            data = Lager(created_at=x['date'],
-                            stock=x['stock'])
-            with app.app_context():
-                db.session.add(data)
+    lager_data = createLagerData()
+    for x in lager_data:
+        data = Lager(created_at=x['date'],
+                        stock=x['stock'])
+        db.session.add(data)
 
-        db.session.commit()
+    db.session.commit()
 
 @manager.command
 def resetdb():

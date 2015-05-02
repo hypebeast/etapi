@@ -2,7 +2,7 @@
 
 
 from fabric.contrib.console import confirm
-from fabric.api import abort, env, local, settings, task, sudo, cd, lcd, put
+from fabric.api import abort, env, local, settings, task, sudo, cd, lcd, put, run, prefix
 from fabric.contrib.files import exists
 
 
@@ -20,11 +20,59 @@ remote_supervisor_dir = '/etc/supervisor/conf.d'
 
 env.user = 'pi'
 env.hosts = ['192.168.0.120']
+env.activate = "source %s/%s" % (remote_app_dir, "env/bin/activate")
 
 ########## END CONFIG
 
 
 ########## HELPERS
+
+def add_remote():
+    """
+    Add production Git repository to remotes
+    """
+    with lcd(local_app_dir):
+        local('git remote add production pi@192.168.0.120:/home/git/etapi.git')
+
+def init_db():
+    """
+    Initialize the database
+    """
+    with cd(remote_app_dir):
+        with prefix(env.activate):
+            run('python manage.py db init')
+
+def push_changes_to_production():
+    with lcd(local_app_dir):
+        local('git push production master')
+
+def install_requirements():
+    with cd(remote_app_dir):
+        with prefix(env.activate):
+            run('pip install -r requirements.txt')
+
+def install_npm_packages():
+    with cd(remote_app_dir):
+        run('npm install')
+
+def install_bower_packages():
+    with cd(remote_app_dir):
+        run('bower install')
+
+def make_migrations():
+    with cd(remote_app_dir):
+        with prefix(env.activate):
+            run('python manage.py db migrate')
+            run('python manage.py db upgrade')
+
+def run_app():
+    """ Run the app! """
+    with cd(remote_app_dir):
+        sudo('supervisorctl start etapi')
+
+def restart_app():
+    with cd(remote_app_dir):
+        sudo('supervisorctl restart etapi')
 
 ########## END HELPERS
 
@@ -124,32 +172,15 @@ def configure_git():
             # Change permissions
             sudo('chown pi:pi ' + remote_git_dir + ' -R')
 
-def add_remote():
-    """
-    Add production ro remotes
-    """
-    with lcd(local_app_dir):
-        local('git remote add production pi@192.168.0.120:/home/git/etapi.git')
-
-def init_db():
-    """
-    Initialize the database
-    """
-    with cd(remote_app_dir):
-        run('source env/bin/activate')
-        run('python manage.py db init')
-
-def run_app():
-    """ Run the app! """
-    with cd(remote_app_dir):
-        sudo('supervisorctl start flask_project')
-
 def bootstrap():
     #install_requirements()
     create_project_dir()
     configure_nginx()
     configure_supervisor()
     configure_git()
+    push_changes_to_production()
+    install_requirements()
+    init_db()
 
 
 ########## END BOOSTRAP
@@ -171,26 +202,28 @@ def deploy():
     local("echo ------------------------")
     local("echo DEPLOYING APP TO PRODUCTION")
 
-    with lcd(local_app_dir):
-        local("echo Push changes to production")
-        local('git push production master')
-        with cd(remote_app_dir):
-            # Install all requirements
-            local("echo Installing all requirements")
+    local("echo Push changes to production")
+    push_changes_to_production()
 
-            run('source env/bin/activate')
-            run('pip install -r requirements.txt')
-            run('npm install')
-            run('bower install')
+    # Install Python requirements
+    local("echo Installing Python requirements")
+    install_requirements()
 
-            # TODO: Make migrations
-            local("echo Make migrations")
-            run('python manage.py db migrate')
-            run('python manage.py db upgrade')
+    # Install NPM packages
+    local('echo Installing NPM packages')
+    install_npm_packages()
 
-            # Restart app
-            local("echo Restarting app")
-            sudo('supervisorctl restart etapi')
+    # Install Bower packages
+    local('echo Installing Bower packages')
+    install_bower_packages()
+
+    # Make migrations
+    local('echo Make migrations')
+    make_migrations()
+
+    # Restart app
+    local('echo Restarting application')
+    restart_app()
 
     local("echo DONE DEPLOYING APP TO PRODUCTION")
     local("echo ------------------------")

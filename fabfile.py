@@ -98,7 +98,6 @@ def install_bower_packages():
 def make_migrations():
     with cd(remote_app_dir):
         with prefix(env.activate):
-            run('ETAPI_ENV=prod python manage.py db migrate')
             run('ETAPI_ENV=prod python manage.py db upgrade')
 
 def run_app():
@@ -255,7 +254,7 @@ def deploy():
 
     # Make migrations
     local('echo Make migrations')
-    #make_migrations()
+    make_migrations()
 
     # Restart app
     local('echo Restarting application')

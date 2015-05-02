@@ -17,6 +17,10 @@ class Kessel(SurrogatePK, Model):
     operating_hours = Column(db.Integer(), nullable=True)
     pellets_stock = Column(db.Integer(), nullable=True)
     pellets_total = Column(db.Integer(), nullable=True)
+    usage_since_service = Column(db.Integer(), nullable=True)
+    reservoir_capacity = Column(db.Integer(), nullable=True)
+    usage_since_deashing = Column(db.Integer(), nullable=True)
+    usage_since_box_exhaustion = Column(db.Integer(), nullable=True)
 
 
 class Lager(SurrogatePK, Model):

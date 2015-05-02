@@ -43,10 +43,14 @@ def install_node():
     if exists("/opt/node") is False:
         sudo("mkdir -p /opt/node")
         with cd('/tmp'):
-            sudo("wget http://nodejs.org/dist/v0.11.9/node-v0.11.9-linux-arm-pi.tar.gz")
-            sudo("tar xzf node-v0.11.9-linux-arm-pi.tar.gz")
-            sudo("cp -r node-v0.11.9-linux-arm-pi/* /opt/node")
-            sudo("rm -rf node-v0.11.9-linux-arm-pi*")
+            sudo("wget https://s3-eu-west-1.amazonaws.com/conoroneill.net/wp-content/uploads/2015/02/node-v0.12.0-linux-arm-pi.tar.gz")
+            sudo("tar xzf node-v0.12.0-linux-arm-pi.tar.gz")
+            sudo("cp -r node-v0.12.0-linux-arm-pi/* /opt/node")
+            sudo("rm -rf node-v0.12.0-linux-arm-pi*")
+            if exists("/usr/local/bin/node"):
+                sudo("rm /usr/local/bin/node")
+            if exists("/usr/local/bin/npm"):
+                sudo("rm /usr/local/bin/npm")
             sudo("ln -s /opt/node/bin/node /usr/local/bin/node")
             sudo("ln -s /opt/node/bin/npm /usr/local/bin/npm")
 
@@ -80,7 +84,7 @@ def install_npm_packages():
 
 def install_bower_packages():
     with cd(remote_app_dir):
-        run('bower install')
+        run('./node_modules/.bin/bower install')
 
 def make_migrations():
     with cd(remote_app_dir):

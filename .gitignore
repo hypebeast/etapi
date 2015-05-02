@@ -42,8 +42,7 @@ docs/_build
 .webassets-cache
 
 # Virtualenvs
-env
-env*
+env/*
 
 # Bower components
 etapi/static/libs

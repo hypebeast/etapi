@@ -12,4 +12,4 @@ cd $FLASKDIR
 export PYTHONPATH=$FLASKDIR:$PYTHONPATH
 
 # Start the crawler
-python scripts/crawler/crawler.py
+ETAPI_ENV=prod python scripts/crawler/crawler.py

@@ -69,6 +69,15 @@ def init_db():
         with prefix(env.activate):
             run('ETAPI_ENV=prod python manage.py db init')
 
+def create_db():
+    """
+    Initialize the database
+    """
+    with cd(remote_app_dir):
+        with prefix(env.activate):
+            if exists(remote_db_dir + "/etapi.db") is False:
+                run('ETAPI_ENV=prod python manage.py createdb')
+
 def push_changes_to_production():
     with lcd(local_app_dir):
         local('git push production master')
@@ -89,8 +98,6 @@ def install_bower_packages():
 def make_migrations():
     with cd(remote_app_dir):
         with prefix(env.activate):
-            if exists(remote_db_dir + "/etapi.db") is False:
-                init_db()
             run('ETAPI_ENV=prod python manage.py db migrate')
             run('ETAPI_ENV=prod python manage.py db upgrade')
 
@@ -209,6 +216,7 @@ def bootstrap():
     configure_git()
     push_changes_to_production()
     install_pip_requirements()
+    create_db()
     #init_db()
 
 

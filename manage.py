@@ -67,6 +67,10 @@ def resetdb():
     db.drop_all()
     db.create_all()
 
+@manager.command
+def createdb():
+    db.create_all()
+
 manager.add_command('server', Server())
 manager.add_command('shell', Shell(make_context=_make_context))
 manager.add_command('db', MigrateCommand)

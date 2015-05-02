@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import sys, os
+from datetime import datetime
 
 import requests
 import xmltodict
@@ -49,13 +50,15 @@ def weatherData():
 
 
 def main():
-    print "Start crawling..."
+    start = datetime.utcnow()
+    print "%s - Start crawling..." % (start.strftime('%Y-%m-%d %H-%M-%S'))
 
     weatherData()
     kesselData()
     lagerData()
 
-    print "DONE"
+    end = datetime.utcnow()
+    print "%s - DONE" % ((end.strftime('%Y-%m-%d %H-%M-%S')))
 
 def exit():
     sys.exit(1)

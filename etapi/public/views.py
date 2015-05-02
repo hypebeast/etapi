@@ -14,6 +14,7 @@ from etapi.kesseldata.helpers import get_operating_hours_last_n_days
 
 public = Blueprint('public', __name__, static_folder="../static")
 
+
 @public.route("/")
 def home():
     w = get_current_weather()
@@ -27,6 +28,7 @@ def home():
     pellets_kessel_stock = get_pellets_kessel_stock()
     pellets_total_consumption = get_pellets_total_consumption()
     pellets_total_stock = get_pellets_total_stock()
+
     operating_hours = get_operating_hours_total()
     operating_hours_last_week = get_operating_hours_last_n_days()
 

@@ -39,3 +39,9 @@ def get_average_temp_today():
     """
     return Weather.query.with_entities(func.avg(Weather.temp).label("temp_avg")).filter(
             func.strftime('%Y-%m-%d', Weather.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).first().temp_avg
+
+def get_daily_temperature_series(current_date=datetime.utcnow()):
+    tomorrow = current_date + timedelta(days=1)
+    return Weather.query.with_entities(Weather.created_at, Weather.temp).filter(
+        Weather.created_at >= current_date.strftime('%Y-%m-%d')).filter(
+        Weather.created_at < tomorrow.strftime('%Y-%m-%d')).all()

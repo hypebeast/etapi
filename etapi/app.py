@@ -14,9 +14,12 @@ from etapi.extensions import (
 )
 
 from .public import public
+from .weather import weather
+
 
 DEFAULT_BLUEPRINTS = (
     public,
+    weather,
 )
 
 def create_app(config_object=ProdConfig, blueprints=None):

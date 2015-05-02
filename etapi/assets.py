@@ -15,7 +15,9 @@ js = Bundle(
     "libs/bootstrap/dist/js/bootstrap.js",
     "libs/metisMenu/dist/metisMenu.js",
     "libs/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js",
+    "libs/highcharts-release/highcharts.js",
     "js/plugins.js",
+    "js/weather-daily-chart.js",
     filters='jsmin',
     output="public/js/common.js"
 )

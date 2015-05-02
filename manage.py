@@ -56,7 +56,8 @@ def loadtestdata():
     for x in lager_data:
         data = Lager(created_at=x['date'],
                         stock=x['stock'])
-        db.session.add(data)
+        with app.app_context():
+            db.session.add(data)
 
     db.session.commit()
 

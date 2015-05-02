@@ -6,7 +6,7 @@ VENVDIR=/home/www/etapi/env
 SOCKFILE=/homee/www/etapi/sock
 USER=pi
 GROUP=pi
-NUM_WORKERS=3
+NUM_WORKERS=1
 
 echo "Starting $NAME"
 

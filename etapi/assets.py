@@ -18,7 +18,6 @@ js = Bundle(
     "libs/highcharts-release/highcharts.js",
     "js/plugins.js",
     "js/weather-daily-chart.js",
-    filters='jsmin',
     output="public/js/common.js"
 )
 

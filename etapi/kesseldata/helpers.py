@@ -23,9 +23,14 @@ def get_pellets_total_consumption():
     """
     Returns the total pellets consumption.
     """
-    return Kessel.query.with_entities(Kessel.pellets_total).filter(
-        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
-        Kessel.id.desc()).first().pellets_total
+    result = Kessel.query.with_entities(Kessel.pellets_total).filter(
+                func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+                Kessel.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.pellets_total
 
 def get_pellets_kessel_stock():
     """

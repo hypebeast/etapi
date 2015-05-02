@@ -29,8 +29,8 @@ def getStrValueOrNone(xml):
 
 def getValueOrNone(xml):
     doc = xmltodict.parse(xml)
-    if doc["eta"]["value"]:
-        return doc["eta"]["value"]
+    if doc["eta"]["value"]["#text"]:
+        return doc["eta"]["value"]["#text"]
 
     return None
 
@@ -45,12 +45,12 @@ def getUserVar(var):
     return apiCall(var_url).text
 
 def kesselData():
-    vollaststunden = int(getValueOrNone("/40/10021/0/0/12153"))
-    gesamtverbrauch = int(getStrValueOrNone("/40/10021/0/0/12016"))
-    verbrauchseitwartung = int(getValueOrNone("/40/10021/0/0/12014"))
-    behaelterinhalt = int(getStrValueOrNone("/40/10021/0/0/12011"))
-    verbrauchseitentaschung = int(getStrValueOrNone("/40/10021/0/0/12012"))
-    verbrauchseitascheboxleeren = int(getStrValueOrNone("/40/10021/0/0/12013"))
+    vollaststunden = int(getValueOrNone(getUserVar("/40/10021/0/0/12153")))
+    gesamtverbrauch = int(getStrValueOrNone(getUserVar("/40/10021/0/0/12016")))
+    verbrauchseitwartung = int(getValueOrNone(getUserVar("/40/10021/0/0/12014")))
+    behaelterinhalt = int(getStrValueOrNone(getUserVar("/40/10021/0/0/12011")))
+    verbrauchseitentaschung = int(getStrValueOrNone(getUserVar("/40/10021/0/0/12012")))
+    verbrauchseitascheboxleeren = int(getStrValueOrNone(getUserVar("/40/10021/0/0/12013")))
 
     kessel = Kessel(operating_hours=vollaststunden,
                     pellets_total=gesamtverbrauch,
@@ -71,9 +71,7 @@ def lagerData():
         db.session.commit()
 
 def weatherData():
-    data = getUserVar("")
-    doc = xmltodict.parse(data)
-    temp = getStrValueOrNone("/40/10241/0/0/12197")
+    temp = getStrValueOrNone(getUserVar("/40/10241/0/0/12197"))
     if temp:
         temp = float(temp.replace(',', '.'))
         weather = Weather(temp=temp)

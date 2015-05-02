@@ -52,3 +52,6 @@ etapi/static/libs
 
 # SQLite dev database
 dev.db
+
+# Node modules
+node_modules/

@@ -4,7 +4,7 @@ import os
 import sys
 import subprocess
 from flask_script import Manager, Shell, Server
-from flask_migrate import MigrateCommand
+from flask.ext.migrate import Migrate, MigrateCommand
 
 from etapi.app import create_app
 from etapi.user.models import User
@@ -22,6 +22,7 @@ else:
 HERE = os.path.abspath(os.path.dirname(__file__))
 TEST_PATH = os.path.join(HERE, 'tests')
 
+migrate = Migrate(app, db)
 manager = Manager(app)
 
 def _make_context():

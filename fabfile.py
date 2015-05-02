@@ -39,6 +39,17 @@ def yes_install(pkg_name):
     """ref: http://stackoverflow.com/a/10439058/1093087"""
     sudo('apt-get --force-yes --yes install %s' % (pkg_name))
 
+def install_node():
+    if exists("/opt/node") is False:
+        sudo("mkdir -p /opt/node")
+        with cd('/tmp'):
+            sudo("wget http://nodejs.org/dist/v0.11.9/node-v0.11.9-linux-arm-pi.tar.gz")
+            sudo("tar xzf node-v0.11.9-linux-arm-pi.tar.gz")
+            sudo("cp -r node-v0.11.9-linux-arm-pi/* /opt/node")
+            sudo("rm -rf node-v0.11.9-linux-arm-pi*")
+            sudo("ln -s /opt/node/bin/node /usr/local/bin/node")
+            sudo("ln -s /opt/node/bin/npm /usr/local/bin/npm")
+
 def add_remote():
     """
     Add production Git repository to remotes
@@ -100,8 +111,6 @@ PACKAGES = (
     'gunicorn',
     'supervisor',
     'git',
-    'nodejs',
-    'npm',
 )
 
 def install_requirements():
@@ -186,14 +195,15 @@ def configure_git():
             sudo('chown pi:pi ' + remote_git_dir + ' -R')
 
 def bootstrap():
-    install_requirements()
+    #install_requirements()
+    install_node()
     create_project_dir()
     configure_nginx()
     configure_supervisor()
     configure_git()
     push_changes_to_production()
     install_pip_requirements()
-    init_db()
+    #init_db()
 
 
 ########## END BOOSTRAP
@@ -220,7 +230,7 @@ def deploy():
 
     # Install Python requirements
     local("echo Installing Python requirements")
-    install_requirements()
+    install_pip_requirements()
 
     # Install NPM packages
     local('echo Installing NPM packages')

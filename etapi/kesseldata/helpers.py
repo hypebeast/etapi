@@ -36,14 +36,14 @@ def get_pellets_kessel_stock():
     """
     Returns the kessel pellets stock.
     """
-    result = Kessel.query.with_entities(Kessel.pellets_stock).filter(
+    result = Kessel.query.with_entities(Kessel.reservoir_capacity).filter(
                 func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
                 Kessel.id.desc()).first()
 
     if not result:
         return None
 
-    return result.pellets_stock
+    return result.reservoir_capacity
 
 def get_pellets_total_stock():
     """

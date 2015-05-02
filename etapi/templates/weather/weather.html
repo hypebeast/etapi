@@ -46,6 +46,6 @@
             $(this).removeClass('active');
         });
 
-        var data = {{ data|safe }};
+        var data = {{ data|tojson|safe }};
     </script>
 {% endblock %}

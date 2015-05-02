@@ -52,3 +52,6 @@ dev.db
 
 # Node modules
 node_modules/
+
+# Diff file
+diff

@@ -67,7 +67,7 @@ def init_db():
     """
     with cd(remote_app_dir):
         with prefix(env.activate):
-            run('python manage.py db init')
+            run('ETAPI_ENV=prod python manage.py db init')
 
 def push_changes_to_production():
     with lcd(local_app_dir):
@@ -89,8 +89,10 @@ def install_bower_packages():
 def make_migrations():
     with cd(remote_app_dir):
         with prefix(env.activate):
-            run('python manage.py db migrate')
-            run('python manage.py db upgrade')
+            if exists(remote_db_dir + "/etapi.db") is False:
+                init_db()
+            run('ETAPI_ENV=prod python manage.py db migrate')
+            run('ETAPI_ENV=prod python manage.py db upgrade')
 
 def run_app():
     """ Run the app! """
@@ -238,15 +240,15 @@ def deploy():
 
     # Install NPM packages
     local('echo Installing NPM packages')
-    install_npm_packages()
+    #install_npm_packages()
 
     # Install Bower packages
     local('echo Installing Bower packages')
-    install_bower_packages()
+    #install_bower_packages()
 
     # Make migrations
     local('echo Make migrations')
-    make_migrations()
+    #make_migrations()
 
     # Restart app
     local('echo Restarting application')

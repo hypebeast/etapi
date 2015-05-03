@@ -29,7 +29,7 @@ def daily(date=get_todays_date().strftime('%Y-%m-%d')):
     timestamps_kessel = get_timestamps(kessel_data)
 
     kessel_temp = [list(x) for x in zip(timestamps_kessel, [(int(d.temperature or 0)) for d in kessel_data])]
-    kessel_pressure = [list(x) for x in zip(timestamps_kessel, [(int(d.pressure or 0)) for d in kessel_data])]
+    kessel_pressure = [list(x) for x in zip(timestamps_kessel, [(float(d.pressure or 0)) for d in kessel_data])]
     kessel_feed_line_temperature  = [list(x) for x in zip(timestamps_kessel, [(int(d.feed_line_temperature or 0)) for d in kessel_data])]
 
     puffer_data = get_puffer_daily_series(current_date)

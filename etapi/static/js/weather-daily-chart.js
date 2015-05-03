@@ -1,17 +1,17 @@
 $(document).ready(function () {
-    var x = new Date();
-    var currentTimeZoneOffsetInHours = x.getTimezoneOffset() / 60;
-
-    Highcharts.setOptions({
-        global: {
-            timezoneOffset: currentTimeZoneOffsetInHours * 60
-        }
-    });
-
     $(function () {
+        var x = new Date();
+        var currentTimeZoneOffsetInHours = x.getTimezoneOffset() / 60;
+
+        Highcharts.setOptions({
+            global: {
+                timezoneOffset: currentTimeZoneOffsetInHours * 60
+            }
+        });
+
         $('#weather-daily-chart').highcharts({
             chart: {
-                type: 'column'
+                type: 'spline'
             },
             title: {
                 text: 'Temperature'
@@ -34,11 +34,10 @@ $(document).ready(function () {
                 useHTML: true
             },
             plotOptions: {
-                column: {
-                    pointPadding: 0.0,
-                    groupPadding: 0.5,
-                    borderWidth: 0,
-                    pointWidth: 5
+                series: {
+                    marker: {
+                        radius: 2
+                    }
                 }
             },
             series: [

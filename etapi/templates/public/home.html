@@ -4,203 +4,298 @@
     Dashboard - EtaPI
 {% endblock %}
 {% block content %}
-  <div id="page-wrapper">
-    <div class="row">
-      <div class="col-sm-12">
-      <h1 class="page-header">Dashboard</h1>
-      </div>
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-sm-12">
+    <h1 class="page-header">Dashboard</h1>
     </div>
+  </div>
 
-    <div class="row">
-      <div class="col-md-6 col-lg-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="wi wi-thermometer fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{ '%0.1f'| format(current_temp|float) if current_temp != None else '-' }} °C</div>
-                  <div>Aktuelle Temperature</div>
-                </div>
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="wi wi-thermometer fa-5x"></i>
               </div>
-          </div>
-          <div class="panel-footer">
-          </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge">{{ '%0.1f'| format(current_temp|float) if current_temp != None else '-' }} °C</div>
+                <div>Aktuelle Temperature</div>
+              </div>
+            </div>
         </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="wi wi-thermometer fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{ '%0.1f'| format(max_temp_today|float) if max_temp_today != None else '-'}} °C</div>
-                  <div>Max. Temp Today</div>
-                </div>
-              </div>
-          </div>
-          <div class="panel-footer">
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="wi wi-thermometer fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{ '%0.1f'| format(min_temp_today|float) if min_temp_today != None else '-'}} °C</div>
-                  <div>Min. Temp Today</div>
-                </div>
-              </div>
-          </div>
-          <div class="panel-footer">
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="wi wi-thermometer fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{ '%0.1f'| format(avg_temp_today|float) if avg_temp_today != None else '-'}} °C</div>
-                  <div>Avg. Temp Today</div>
-                </div>
-              </div>
-          </div>
-          <div class="panel-footer">
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-6 col-lg-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="fa fa-info fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{ pellets_today or '-'}} kg</div>
-                  <div>Pellets Verbrauch Heute</div>
-                </div>
-              </div>
-          </div>
-          <div class="panel-footer">
-            <a href="#">
-              <span class="pull-left">Last 7 Days</span>
-              <span class="pull-right">{{ pellets_last_week or '-' }} kg</span>
-              <div class="clearfix"></div>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="fa fa-info fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{ pellets_kessel_stock or '-' }} kg</div>
-                  <div>Pellets Kesselvorrat</div>
-                </div>
-              </div>
-          </div>
-          <div class="panel-footer">
-
-          </div>
-        </div>
-      </div>
-
-       <div class="col-md-6 col-lg-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="fa fa-info fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{ pellets_total_stock or '-' }} kg</div>
-                  <div>Pellets Lagervorrat</div>
-                </div>
-              </div>
-          </div>
-          <div class="panel-footer">
-            <a href="#">
-              <span class="pull-left">Pellets Verbrauch Gesamt</span>
-              <span class="pull-right">{{ pellets_total_consumption or '-' }} kg</span>
-              <div class="clearfix"></div>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="fa fa-info fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{ operating_hours | pretty_seconds if operating_hours or '-' }}</div>
-                  <div>Betriebsstunden</div>
-                </div>
-              </div>
-          </div>
-          <div class="panel-footer">
+        <div class="panel-footer">
           <a href="#">
-              <span class="pull-left">In den letzten 7 Tagen</span>
-              <span class="pull-right">{{ operating_hours_last_week | pretty_seconds if operating_hours_last_week or '-' }}</span>
-              <div class="clearfix"></div>
-            </a>
-          </div>
+            <span class="pull-left">Tagesdurchschnitt</span>
+            <span class="pull-right">{{ '%0.1f'| format(avg_temp_today|float) if avg_temp_today != None else '-'}} °C</span>
+            <div class="clearfix"></div>
+          </a>
         </div>
       </div>
-
     </div>
 
-    <div class="row">
-      <div class="col-md-6 col-lg-3">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-3">
-                  <i class="wi wi-thermometer fa-5x"></i>
-                </div>
-                <div class="col-xs-9 text-right">
-                  <div class="huge">{{ puffer_temperature_top or '-' }} °C</div>
-                  <div>Puffer Temperatur Oben</div>
-                </div>
+    <div class="col-md-6 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="wi wi-thermometer fa-5x"></i>
               </div>
-          </div>
-          <div class="panel-footer">
+              <div class="col-xs-9 text-right">
+                <div class="huge">{{ '%0.1f'| format(max_temp_today|float) if max_temp_today != None else '-'}} °C</div>
+                <div>Max. Temp Today</div>
+              </div>
+            </div>
+        </div>
+        <div class="panel-footer">
           <a href="#">
-              <span class="pull-left">Temperatur Unten</span>
-              <span class="pull-right">{{ puffer_temperature_bottom or '-' }} °C</span>
-              <div class="clearfix"></div>
-            </a>
-          </div>
+            <span class="pull-left">Min. Temp Today</span>
+            <span class="pull-right">{{ '%0.1f'| format(min_temp_today|float) if min_temp_today != None else '-'}} °C</span>
+            <div class="clearfix"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="wi wi-thermometer fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge">{{ puffer_temperature_top or '-' }} °C</div>
+                <div>Puffer Temperatur Oben</div>
+              </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+        <a href="#">
+            <span class="pull-left">Temperatur Unten</span>
+            <span class="pull-right">{{ puffer_temperature_bottom or '-' }} °C</span>
+            <div class="clearfix"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-6 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="fa fa-info fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge">{{ operating_hours | pretty_seconds if operating_hours or '-' }}</div>
+                <div>Betriebsstunden</div>
+              </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+        <a href="#">
+            <span class="pull-left">In den letzten 7 Tagen</span>
+            <span class="pull-right">{{ operating_hours_last_week | pretty_seconds if operating_hours_last_week or '-' }}</span>
+            <div class="clearfix"></div>
+          </a>
         </div>
       </div>
     </div>
 
   </div>
+
+  <div class="row">
+    <div class="col-md-6 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="fa fa-info fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge">{{ pellets_today or '-'}} kg</div>
+                <div>Pellets Verbrauch Heute</div>
+              </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+          <a href="#">
+            <span class="pull-left">Last 7 Days</span>
+            <span class="pull-right">{{ pellets_last_week or '-' }} kg</span>
+            <div class="clearfix"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="fa fa-info fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge">{{ pellets_kessel_stock or '-' }} kg</div>
+                <div>Pellets Kesselvorrat</div>
+              </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+          <span class="pull-left">&nbsp;</span>
+          <span class="pull-right"></span>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+
+     <div class="col-md-6 col-lg-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="row">
+              <div class="col-xs-3">
+                <i class="fa fa-info fa-5x"></i>
+              </div>
+              <div class="col-xs-9 text-right">
+                <div class="huge">{{ pellets_total_stock or '-' }} kg</div>
+                <div>Pellets Lagervorrat</div>
+              </div>
+            </div>
+        </div>
+        <div class="panel-footer">
+          <a href="#">
+            <span class="pull-left">Pellets Verbrauch Gesamt</span>
+            <span class="pull-right">{{ pellets_total_consumption or '-' }} kg</span>
+            <div class="clearfix"></div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="panel panel-default">
+
+        <div class="panel-heading">
+            <i class="fa fa-check fa-fw"></i> Current Status
+        </div>
+
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+          <div class="list-group">
+            <div class="list-group-item">
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td><strong>Kessel</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Temperatur</td>
+                    <td class="text-right">{{ kessel_temp or '-' }} °C</td>
+                    <td>Druck</td>
+                    <td class="text-right">{{ kessel_pressure or '-' }} Bar</td>
+                  </tr>
+                  <tr>
+                    <td>Vorlauftemperatur</td>
+                    <td class="text-right">{{ kessel_feed_line_temp or '-' }} °C</td>
+                    <td>Abgastemperatur</td>
+                    <td class="text-right">{{ kessel_exhaust_temp or '-' }} °C</td>
+                  </tr>
+                  <tr>
+                    <td>Abgasgebläse</td>
+                    <td class="text-right">{{ kessel_exhaust_blower or '-' }} u/min</td>
+                    <td>Restsauerstoff</td>
+                    <td class="text-right">{{ kessel_residual_oxygen or '-' }}</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Puffer</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Temperatur Oben</td>
+                    <td class="text-right">{{ puffer_temperature_top or '-' }} °C</td>
+                    <td>Temperatur Unten</td>
+                    <td class="text-right">{{ puffer_temperature_bottom or '-' }} °C</td>
+                  </tr>
+                  <tr>
+                    <td>Warmwasserspeicher</td>
+                    <td class="text-right">{{ puffer_temp_water_storage or '-' }} °C</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-6 -->
+
+    <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <i class="fa fa-info fa-fw"></i> Info
+        </div>
+
+        <div class="panel-body">
+          <div class="list-group">
+            <div class="list-group-item">
+              <table class="table table-hover">
+                <tbody>
+                  <tr>
+                    <td><strong>Kessel</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Betriebsst.</td>
+                    <td class="text-right">{{ operating_hours | pretty_seconds if operating_hours or '-' }}</td>
+                    <td>Betriebsst. Letzte Woche</td>
+                    <td class="text-right">{{ operating_hours_last_week | pretty_seconds if operating_hours_last_week or '-' }}</td>
+                  </tr>
+                  <tr>
+                    <td>Pellets Vorrat</td>
+                    <td class="text-right">{{ pellets_kessel_stock or '-' }} kg</td>
+                    <td>Pellets Gesamtverbrauch</td>
+                    <td class="text-right">{{ pellets_total_consumption or '-' }} kg</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Lager</strong></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Vorrat</td>
+                    <td class="text-right">{{ pellets_total_stock or '-' }} kg</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+
+
+</div>
 {% endblock %}
 

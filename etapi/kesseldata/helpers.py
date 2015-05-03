@@ -83,6 +83,66 @@ def get_operating_hours_last_n_days(n=7):
 
     return result.operating_hours
 
+def get_kessel_current_temp():
+    result = Kessel.query.with_entities(Kessel.temperature).filter(
+        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Kessel.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.temperature
+
+def get_kessel_current_pressure():
+    result = Kessel.query.with_entities(Kessel.pressure).filter(
+        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Kessel.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.pressure
+
+def get_kessel_current_feed_line_temp():
+    result = Kessel.query.with_entities(Kessel.feed_line_temperature).filter(
+        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Kessel.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.feed_line_temperature
+
+def get_kessel_current_exhaust_temp():
+    result = Kessel.query.with_entities(Kessel.exhaust_temperature).filter(
+        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Kessel.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.exhaust_temperature
+
+def get_kessel_current_exhaust_blower():
+    result = Kessel.query.with_entities(Kessel.exhaust_blower).filter(
+        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Kessel.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.exhaust_blower
+
+def get_kessel_current_residual_oxygen():
+    result = Kessel.query.with_entities(Kessel.residual_oxygen).filter(
+        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Kessel.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.residual_oxygen
+
 def get_puffer_temperature_top():
     """
     Returns the current top puffer temperature.
@@ -109,3 +169,13 @@ def get_puffer_temperature_bottom():
         return None
 
     return result.temperature_bottom
+
+def get_puffer_current_temp_water_storage():
+    result = Puffer.query.with_entities(Puffer.hot_water_storage_temp).filter(
+        func.strftime('%Y-%m-%d', Puffer.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Puffer.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.hot_water_storage_temp

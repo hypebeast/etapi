@@ -12,7 +12,7 @@ from etapi.extensions import (
     migrate,
     debug_toolbar,
 )
-from etapi.utils import pretty_date, pretty_seconds
+from etapi.utils import pretty_date, pretty_seconds_to_hh, pretty_seconds_to_hhmm
 
 from .public import public
 from .weather import weather
@@ -69,9 +69,13 @@ def configure_template_filters(app):
     def pretty_date(value):
         return pretty_date(value)
 
-    @app.template_filter('pretty_seconds')
-    def pretty_seconds_filter(value):
-        return pretty_seconds(value)
+    @app.template_filter('pretty_seconds_hh')
+    def pretty_seconds_to_hh_filter(value):
+        return pretty_seconds_to_hh(value)
+
+    @app.template_filter('pretty_seconds_hhmm')
+    def pretty_seconds_to_hhmm_filter(value):
+        return pretty_seconds_to_hhmm(value)
 
     @app.template_filter()
     def format_date(value, format='%Y-%m-%d'):

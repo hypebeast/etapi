@@ -90,7 +90,7 @@
                 <i class="fa fa-info fa-5x"></i>
               </div>
               <div class="col-xs-9 text-right">
-                <div class="huge">{{ operating_hours | pretty_seconds if operating_hours or '-' }}</div>
+                <div class="huge">{{ operating_hours | pretty_seconds_hh if operating_hours or '-' }}</div>
                 <div>Betriebsstunden</div>
               </div>
             </div>
@@ -98,7 +98,7 @@
         <div class="panel-footer">
         <a href="#">
             <span class="pull-left">In den letzten 7 Tagen</span>
-            <span class="pull-right">{{ operating_hours_last_week | pretty_seconds if operating_hours_last_week or '-' }}</span>
+            <span class="pull-right">{{ operating_hours_last_week | pretty_seconds_hhmm if operating_hours_last_week or '-' }}</span>
             <div class="clearfix"></div>
           </a>
         </div>
@@ -263,15 +263,27 @@
                   </tr>
                   <tr>
                     <td>Betriebsst.</td>
-                    <td class="text-right">{{ operating_hours | pretty_seconds if operating_hours or '-' }}</td>
+                    <td class="text-right">{{ operating_hours | pretty_seconds_hhmm if operating_hours or '-' }}</td>
                     <td>Betriebsst. Letzte Woche</td>
-                    <td class="text-right">{{ operating_hours_last_week | pretty_seconds if operating_hours_last_week or '-' }}</td>
+                    <td class="text-right">{{ operating_hours_last_week | pretty_seconds_hhmm if operating_hours_last_week or '-' }}</td>
                   </tr>
                   <tr>
                     <td>Pellets Vorrat</td>
                     <td class="text-right">{{ pellets_kessel_stock or '-' }} kg</td>
                     <td>Pellets Gesamtverbrauch</td>
                     <td class="text-right">{{ pellets_total_consumption or '-' }} kg</td>
+                  </tr>
+                  <tr>
+                    <td>Verbrauch seit Wartung</td>
+                    <td class="text-right">{{ kessel_usage_since_service or '-' }} kg</td>
+                    <td>Kesselvorrat</td>
+                    <td class="text-right">{{ pellets_kessel_stock or '-' }} kg</td>
+                  </tr>
+                  <tr>
+                    <td>Verbrauch seit Aschebox leeren</td>
+                    <td class="text-right">{{ kessel_usage_since_box_exhaustion or '-' }} kg</td>
+                    <td>Verbrauch seit Entaschung</td>
+                    <td class="text-right">{{ kessel_usage_since_deashing or '-' }} kg</td>
                   </tr>
                   <tr>
                     <td><strong>Lager</strong></td>

@@ -143,6 +143,36 @@ def get_kessel_current_residual_oxygen():
 
     return result.residual_oxygen
 
+def get_kessel_usage_since_service():
+    result = Kessel.query.with_entities(Kessel.usage_since_service).filter(
+        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Kessel.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.usage_since_service
+
+def get_kessel_usage_since_deashing():
+    result = Kessel.query.with_entities(Kessel.usage_since_deashing).filter(
+        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Kessel.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.usage_since_deashing
+
+def get_kessel_usage_since_box_exhaustion():
+    result = Kessel.query.with_entities(Kessel.usage_since_box_exhaustion).filter(
+        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Kessel.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.usage_since_box_exhaustion
+
 def get_puffer_temperature_top():
     """
     Returns the current top puffer temperature.

@@ -20,6 +20,9 @@ from etapi.kesseldata.helpers import get_kessel_current_feed_line_temp
 from etapi.kesseldata.helpers import get_kessel_current_exhaust_temp
 from etapi.kesseldata.helpers import get_kessel_current_exhaust_blower
 from etapi.kesseldata.helpers import get_kessel_current_residual_oxygen
+from etapi.kesseldata.helpers import get_kessel_usage_since_service
+from etapi.kesseldata.helpers import get_kessel_usage_since_deashing
+from etapi.kesseldata.helpers import get_kessel_usage_since_box_exhaustion
 
 public = Blueprint('public', __name__, static_folder="../static")
 
@@ -43,6 +46,9 @@ def home():
     kessel_exhaust_temp = get_kessel_current_exhaust_temp()
     kessel_exhaust_blower = get_kessel_current_exhaust_blower()
     kessel_residual_oxygen = get_kessel_current_residual_oxygen()
+    kessel_usage_since_service = get_kessel_usage_since_service() / 10
+    kessel_usage_since_deashing = get_kessel_usage_since_deashing()
+    kessel_usage_since_box_exhaustion = get_kessel_usage_since_box_exhaustion()
 
     operating_hours = get_operating_hours_total()
     operating_hours_last_week = get_operating_hours_last_n_days()
@@ -62,7 +68,9 @@ def home():
                             puffer_temp_water_storage=puffer_temp_water_storage,
                             kessel_temp=kessel_temp, kessel_pressure=kessel_pressure,
                             kessel_feed_line_temp=kessel_feed_line_temp, kessel_exhaust_temp=kessel_exhaust_temp,
-                            kessel_exhaust_blower=kessel_exhaust_blower, kessel_residual_oxygen=kessel_residual_oxygen)
+                            kessel_exhaust_blower=kessel_exhaust_blower, kessel_residual_oxygen=kessel_residual_oxygen,
+                            kessel_usage_since_service=kessel_usage_since_service, kessel_usage_since_deashing=kessel_usage_since_deashing,
+                            kessel_usage_since_box_exhaustion=kessel_usage_since_box_exhaustion)
 
 @public.route("/about/")
 def about():

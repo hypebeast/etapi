@@ -17,7 +17,7 @@ if os.environ.get("ETAPI_ENV") == 'prod':
 else:
     app = create_app(DevConfig)
 
-API_HOST = "http://192.168.0.108"
+API_HOST = "http://192.168.0.130"
 API_PORT = "8080"
 
 def getStrValueOrNone(xml):

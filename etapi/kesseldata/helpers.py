@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta
 from sqlalchemy import func
 
-from etapi.kesseldata.models import Kessel, Lager
+from etapi.kesseldata.models import Kessel, Lager, Puffer
 
 
 def get_pellets_consumption_today():
@@ -83,3 +83,29 @@ def get_operating_hours_last_n_days(n=7):
 
     return result.operating_hours
 
+def get_puffer_temperature_top():
+    """
+    Returns the current top puffer temperature.
+    """
+    result = Puffer.query.with_entities(Puffer.temperature_top).filter(
+        func.strftime('%Y-%m-%d', Puffer.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Puffer.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.temperature_top
+
+
+def get_puffer_temperature_bottom():
+    """
+    Returns the current top puffer temperature.
+    """
+    result = Puffer.query.with_entities(Puffer.temperature_bottom).filter(
+        func.strftime('%Y-%m-%d', Puffer.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).order_by(
+        Puffer.id.desc()).first()
+
+    if not result:
+        return None
+
+    return result.temperature_bottom

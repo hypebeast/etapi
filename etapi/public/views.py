@@ -11,6 +11,8 @@ from etapi.kesseldata.helpers import get_pellets_kessel_stock
 from etapi.kesseldata.helpers import get_pellets_total_stock
 from etapi.kesseldata.helpers import get_operating_hours_total
 from etapi.kesseldata.helpers import get_operating_hours_last_n_days
+from etapi.kesseldata.helpers import get_puffer_temperature_top
+from etapi.kesseldata.helpers import get_puffer_temperature_bottom
 
 public = Blueprint('public', __name__, static_folder="../static")
 
@@ -32,13 +34,17 @@ def home():
     operating_hours = get_operating_hours_total()
     operating_hours_last_week = get_operating_hours_last_n_days()
 
+    puffer_temperature_top = get_puffer_temperature_top()
+    puffer_temperature_bottom = get_puffer_temperature_bottom()
+
     return render_template("public/home.html",
                             current_temp=current_temp, max_temp_today=max_temp,
                             min_temp_today=min_temp, avg_temp_today=avg_temp,
                             pellets_today=pellets_today, pellets_last_week=pellets_last_week,
                             pellets_kessel_stock=pellets_kessel_stock, pellets_total_consumption=pellets_total_consumption,
                             pellets_total_stock=pellets_total_stock,
-                            operating_hours=operating_hours, operating_hours_last_week=operating_hours_last_week)
+                            operating_hours=operating_hours, operating_hours_last_week=operating_hours_last_week,
+                            puffer_temperature_top=puffer_temperature_top, puffer_temperature_bottom=puffer_temperature_bottom)
 
 @public.route("/about/")
 def about():

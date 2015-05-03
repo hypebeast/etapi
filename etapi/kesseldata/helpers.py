@@ -12,12 +12,35 @@ def get_pellets_consumption_today():
     return Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption')).filter(
         func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).first().pellets_consumption
 
+def get_pellets_consumption_for_day(d=datetime.utcnow()):
+    """
+    Returns the pellets consumption for today.
+    """
+    return Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption')).filter(
+        func.strftime('%Y-%m-%d', Kessel.created_at) == d.strftime('%Y-%m-%d')).first().pellets_consumption
+
 def get_pellets_consumption_last_n_days(n=7):
     """
     Returs the pellets consumption for the last n days. Today is included.
     """
     return Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption')).filter(
         func.strftime('%Y-%m-%d', Kessel.created_at) > (datetime.utcnow() - timedelta(days=n))).first().pellets_consumption
+
+def get_kessel_current_data():
+    pass
+
+def get_kessel_daily_series(current_date=datetime.utcnow()):
+    tomorrow = current_date + timedelta(days=1)
+    return Kessel.query.with_entities(Kessel.created_at, Kessel.temperature, Kessel.pressure, Kessel.feed_line_temperature).filter(
+        Kessel.created_at >= current_date.strftime('%Y-%m-%d')).filter(
+        Kessel.created_at < tomorrow.strftime('%Y-%m-%d')).all()
+
+def get_puffer_daily_series(current_date=datetime.utcnow()):
+    tomorrow = current_date + timedelta(days=1)
+    return Puffer.query.with_entities(Puffer.created_at, Puffer.temperature_top,
+                                        Puffer.temperature_bottom, Puffer.hot_water_storage_temp).filter(
+        Puffer.created_at >= current_date.strftime('%Y-%m-%d')).filter(
+        Puffer.created_at < tomorrow.strftime('%Y-%m-%d')).all()
 
 def get_pellets_total_consumption():
     """

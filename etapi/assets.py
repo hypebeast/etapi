@@ -25,8 +25,16 @@ weather_js = Bundle(
     output="public/js/weather_prod.js"
 )
 
+charts_daily_js = Bundle(
+    "js/daily_chart.js",
+    "js/daily_kessel_chart.js",
+    "js/daily_puffer_chart.js",
+    output="public/js/dialy_charts.js"
+)
+
 assets = Environment()
 
 assets.register("js_all", js)
 assets.register("css_all", css)
 assets.register("js_weather", weather_js)
+assets.register("js_charts_daily", charts_daily_js)

@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block page_title %}
+    Daily Statistics - Eta Pi
+{% endblock %}
+
+{% block content %}
+    <div id="page-wrapper">
+        <div class="row">
+            {% if error %}
+                <div class="bg-danger">
+                    <span class="text-danger"><strong>Error:</strong> {{ error }}
+                    </span>
+                </div>
+            {% endif %}
+            <div class="col-lg-12">
+                <h1 class="page-header">Daily Pellets Usage: {{ pellets_usage_today or '0' }} kg</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span><strong>Kessel</strong></span>
+                        <a href="{{ url_for('charts.daily', date=yesterday.strftime('%Y-%m-%d')) }}"
+                           class="btn btn-default"><i class="fa fa-angle-left"></i></a>
+                        <span>Data for {{ today.strftime('%Y-%m-%d') }}</span>
+                        <a href="{{ url_for('charts.daily', date=tomorrow.strftime('%Y-%m-%d')) }}"
+                           class="btn btn-default"><i class="fa fa-angle-right"></i></a>
+                    </div>
+                    <div class="panel-body">
+                        <div id="daily-kessel-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span><strong>Puffer</strong></span>
+                    </div>
+                    <div class="panel-body">
+                        <div id="daily-puffer-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {% assets "js_charts_daily" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+
+    <script>
+        $('#side-menu').find('a').each(function (i) {
+            $(this).removeClass('active');
+        });
+        $('#daily_data').addClass("active");
+
+        var puffer_temp_top_data = {{ puffer_temp_top_data|tojson|safe }};
+        var puffer_temp_bottom_data = {{ puffer_temp_bottom_data|tojson|safe }};
+        var puffer_temp_hot_water_storage = {{ puffer_temp_hot_water_storage|tojson|safe }};
+        var kessel_temp = {{ kessel_temp|tojson|safe }};
+        var kessel_pressure = {{ kessel_pressure|tojson|safe }};
+        var kessel_feed_line_temperature = {{ kessel_feed_line_temperature|tojson|safe }};
+
+    </script>
+{% endblock %}

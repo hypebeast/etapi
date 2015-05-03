@@ -16,11 +16,13 @@ from etapi.utils import pretty_date, pretty_seconds_to_hh, pretty_seconds_to_hhm
 
 from .public import public
 from .weather import weather
+from .charts import charts
 
 
 DEFAULT_BLUEPRINTS = (
     public,
     weather,
+    charts,
 )
 
 def create_app(config_object=ProdConfig, blueprints=None):

@@ -23,7 +23,7 @@
                     <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                     <ul id='chart_nav' class="nav nav-second-level">
                         <li>
-                            <a id="daily_data" href="#">Daily Charts</a>
+                            <a id="daily_data" href="{{ url_for('charts.daily') }}">Daily Charts</a>
                         </li>
                         <li>
                             <a id="weekly_data" href="#">Weekly Charts</a>
@@ -36,13 +36,6 @@
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
-                </li>
-                <li>
-                    <a id="tables" href="#"><i class="fa fa-table fa-fw"></i> Tables</a>
-                </li>
-                <li>
-                    <a id="statistics" href="#"><i class="fa fa-signal fa-fw"></i>
-                        Statistics</a>
                 </li>
                 <li>
                     <a id="weather" href="{{ url_for('weather.index') }}">

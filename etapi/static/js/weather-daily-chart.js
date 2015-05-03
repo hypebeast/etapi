@@ -1,4 +1,13 @@
 $(document).ready(function () {
+    var x = new Date();
+    var currentTimeZoneOffsetInHours = x.getTimezoneOffset() / 60;
+
+    Highcharts.setOptions({
+        global: {
+            timezoneOffset: currentTimeZoneOffsetInHours * 60
+        }
+    });
+
     $(function () {
         $('#weather-daily-chart').highcharts({
             chart: {

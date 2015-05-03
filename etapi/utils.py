@@ -49,4 +49,4 @@ def pretty_date(dt, default=None):
 def pretty_seconds(seconds):
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
-    return "%d h" % (h)
+    return "%d h %d m" % (h, m)

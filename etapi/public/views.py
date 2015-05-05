@@ -46,7 +46,9 @@ def home():
     kessel_exhaust_temp = get_kessel_current_exhaust_temp()
     kessel_exhaust_blower = get_kessel_current_exhaust_blower()
     kessel_residual_oxygen = get_kessel_current_residual_oxygen()
-    kessel_usage_since_service = get_kessel_usage_since_service() / 10
+    kessel_usage_since_service = get_kessel_usage_since_service()
+    if kessel_usage_since_service and kessel_usage_since_service > 0:
+        kessel_usage_since_service = kessel_usage_since_service / 10
     kessel_usage_since_deashing = get_kessel_usage_since_deashing()
     kessel_usage_since_box_exhaustion = get_kessel_usage_since_box_exhaustion()
 

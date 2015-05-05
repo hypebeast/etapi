@@ -3,7 +3,7 @@ import calendar
 from datetime import datetime
 
 def get_todays_date():
-    return datetime.now().date()
+    return datetime.utcnow().date()
 
 def get_timestamps(series):
     """

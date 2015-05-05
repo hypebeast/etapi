@@ -1,0 +1,71 @@
+{% extends "layout.html" %}
+{% block page_title %}
+    Weekly Statistics - Eta Pi
+{% endblock %}
+
+{% block content %}
+    <div id="page-wrapper">
+        <div class="row">
+            {% if error %}
+                <div class="bg-danger">
+                    <span class="text-danger"><strong>Error:</strong> {{ error }}
+                    </span>
+                </div>
+            {% endif %}
+
+            {% if no_data %}
+                <div class="bg-info">
+                    <span class="text-info"><strong>Not enough data!</strong>
+                    </span>
+                </div>
+            {% endif %}
+
+            <div class="col-lg-12">
+                <h1 class="page-header">Weekly Charts</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span><strong>Pellets Consumption</strong></span>
+                    </div>
+                    <div class="panel-body">
+                        <div id="weekly-pellets-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span><strong>Operating Hours</strong></span>
+                    </div>
+                    <div class="panel-body">
+                        <div id="weekly-ophours-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    {% assets "js_charts_weekly" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+
+    <script>
+        $('#side-menu').find('a').each(function (i) {
+            $(this).removeClass('active');
+        });
+        $('#weekly_data').addClass("active");
+
+        var pellets_data = {{ pellets_consumption|tojson|safe }}
+        var operating_hours_data = {{ operating_hours|tojson|safe }}
+
+    </script>
+{% endblock %}

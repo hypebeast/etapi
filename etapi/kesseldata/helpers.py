@@ -42,6 +42,28 @@ def get_puffer_daily_series(current_date=datetime.utcnow()):
         Puffer.created_at >= current_date.strftime('%Y-%m-%d')).filter(
         Puffer.created_at < tomorrow.strftime('%Y-%m-%d')).all()
 
+def get_daily_pellets_consumption_last_7_days():
+    """
+    Returns an array with the daily pellets consumption for the last seven days.
+    """
+    today = datetime.utcnow()
+    result = Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption'),
+                                            func.strftime('%Y-%m-%d', Kessel.created_at).label('created_at')).filter(
+        Kessel.created_at >= (today - timedelta(days=7)).strftime('%Y-%m-%d')).filter(
+        Kessel.created_at <= today.strftime('%Y-%m-%d')).group_by(func.strftime('%Y-%m-%d', Kessel.created_at)).all()
+
+
+def get_daily_operating_hours_last_7_days():
+    """
+    Returns an array with the daily operating_hours for the last seven days.
+    """
+    today = datetime.utcnow()
+    return Kessel.query.with_entities((func.max(Kessel.operating_hours) - func.min(Kessel.operating_hours)).label('operating_hours'),
+                                            func.strftime('%Y-%m-%d', Kessel.created_at).label('created_at')).filter(
+        Kessel.created_at >= (today - timedelta(days=7)).strftime('%Y-%m-%d')).filter(
+        Kessel.created_at <= today.strftime('%Y-%m-%d')).group_by(func.strftime('%Y-%m-%d', Kessel.created_at)).all()
+
+
 def get_pellets_total_consumption():
     """
     Returns the total pellets consumption.

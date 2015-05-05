@@ -26,10 +26,8 @@ $(document).ready(function () {
             },
             plotOptions: {
                 column: {
-                    pointPadding: 0.0,
-                    groupPadding: 0.5,
-                    borderWidth: 0,
-                    pointWidth: 5
+                    pointPadding: 0.2,
+                    borderWidth: 0
                 }
             },
             series: [

@@ -47,7 +47,7 @@ def get_daily_pellets_consumption_last_7_days():
     Returns an array with the daily pellets consumption for the last seven days.
     """
     today = datetime.utcnow()
-    result = Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption'),
+    return Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption'),
                                             func.strftime('%Y-%m-%d', Kessel.created_at).label('created_at')).filter(
         Kessel.created_at >= (today - timedelta(days=7)).strftime('%Y-%m-%d')).filter(
         Kessel.created_at <= today.strftime('%Y-%m-%d')).group_by(func.strftime('%Y-%m-%d', Kessel.created_at)).all()

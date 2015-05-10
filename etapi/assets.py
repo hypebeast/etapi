@@ -16,6 +16,7 @@ js = Bundle(
     "libs/metisMenu/dist/metisMenu.js",
     "libs/startbootstrap-sb-admin-2/dist/js/sb-admin-2.js",
     "libs/highcharts-release/highcharts.js",
+    "libs/moment/moment.js",
     "js/plugins.js",
     output="public/js/common.js"
 )

@@ -19,7 +19,7 @@ remote_nginx_dir = '/etc/nginx/sites-enabled'
 remote_supervisor_dir = '/etc/supervisor/conf.d'
 
 env.user = 'pi'
-env.hosts = ['192.168.0.120']
+env.hosts = ['etapi.duckdns.org']
 env.activate = "source %s/%s" % (remote_app_dir, "env/bin/activate")
 
 ########## END CONFIG

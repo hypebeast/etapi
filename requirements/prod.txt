@@ -44,3 +44,6 @@ requests==2.6.2
 
 # xmltodict
 xmltodict==0.9.2
+
+# tzlocal
+tzlocal==1.1.3

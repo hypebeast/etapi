@@ -5,6 +5,7 @@ from flask import (Blueprint, request, render_template)
 
 from etapi.lib.helpers import get_timestamps
 from etapi.lib.helpers import get_todays_date
+from etapi.lib.helpers import convert_series_to_local_time
 from etapi.weather.helpers import get_daily_temperature_series
 
 
@@ -26,6 +27,7 @@ def index(date=get_todays_date().strftime('%Y-%m-%d')):
     timestamps_temp = get_timestamps(temp_data)
 
     daily_chart_data = [list(x) for x in zip(timestamps_temp, [(float(d.temp or 0 )) for d in temp_data])]
+    daily_chart_data = convert_series_to_local_time(daily_chart_data)
 
     return render_template("weather/weather.html",
                             today=current_date, yesterday=yesterday, tomorrow=tomorrow,

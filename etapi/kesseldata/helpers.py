@@ -2,6 +2,7 @@
 from datetime import datetime, timedelta
 from sqlalchemy import func
 
+from etapi.lib.helpers import get_local_start_of_day_time, get_local_time, get_todays_date, get_start_of_day_in_utc_time
 from etapi.kesseldata.models import Kessel, Lager, Puffer
 
 
@@ -9,22 +10,28 @@ def get_pellets_consumption_today():
     """
     Returns the pellets consumption for today.
     """
+    start_date = get_local_start_of_day_time()
+    end_date = start_date + timedelta(days=1)
     return Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption')).filter(
-        func.strftime('%Y-%m-%d', Kessel.created_at) == datetime.utcnow().strftime('%Y-%m-%d')).first().pellets_consumption
+        Kessel.created_at >= start_date).filter(
+        Kessel.created_at <= end_date).first().pellets_consumption
 
-def get_pellets_consumption_for_day(d=datetime.utcnow()):
+def get_pellets_consumption_for_day(d=datetime.now()):
     """
-    Returns the pellets consumption for today.
+    Returns the pellets consumption for the specified day.
     """
+    start_date = get_start_of_day_in_utc_time(d)
+    end_date = start_date + timedelta(days=1)
     return Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption')).filter(
-        func.strftime('%Y-%m-%d', Kessel.created_at) == d.strftime('%Y-%m-%d')).first().pellets_consumption
+        Kessel.created_at >= start_date).filter(
+        Kessel.created_at <= end_date).first().pellets_consumption
 
 def get_pellets_consumption_last_n_days(n=7):
     """
     Returs the pellets consumption for the last n days. Today is included.
     """
     return Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption')).filter(
-        func.strftime('%Y-%m-%d', Kessel.created_at) > (datetime.utcnow() - timedelta(days=n))).first().pellets_consumption
+        func.strftime('%Y-%m-%d', Kessel.created_at) >= (datetime.utcnow() - timedelta(days=n))).first().pellets_consumption
 
 def get_kessel_current_data():
     pass

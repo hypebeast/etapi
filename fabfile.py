@@ -2,8 +2,10 @@
 
 
 from fabric.contrib.console import confirm
-from fabric.api import abort, env, local, settings, task, sudo, cd, lcd, put, run, prefix
+from fabric.api import abort, env, local, settings, task, sudo, cd, lcd, put, run, prefix, get
 from fabric.contrib.files import exists
+
+from etapi.settings import ProdConfig
 
 
 ########## CONFIG
@@ -108,6 +110,10 @@ def run_app():
 def restart_app():
     with cd(remote_app_dir):
         sudo('supervisorctl restart etapi')
+
+def copydb():
+    """Get the production database"""
+    get(ProdConfig.DB_PATH, 'dev.db')
 
 ########## END HELPERS
 
@@ -250,7 +256,7 @@ def deploy():
 
     # Install Bower packages
     local('echo Installing Bower packages')
-    #install_bower_packages()
+    install_bower_packages()
 
     # Make migrations
     local('echo Make migrations')

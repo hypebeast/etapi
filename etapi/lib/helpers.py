@@ -7,7 +7,7 @@ import tzlocal
 
 
 def get_todays_date():
-    return datetime.now().date()
+    return datetime.now()
 
 def get_timestamps(series):
     """

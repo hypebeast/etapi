@@ -15,13 +15,17 @@ def get_timestamps(series):
     """
     return [1000 * calendar.timegm(d.created_at.replace(second=0).timetuple()) for d in series]
 
-def get_local_start_of_day_time():
+def get_start_of_today_in_utc_time():
+    """
+    Returns the local start time of today in UTC time.
+    """
     dt = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
     return dt - get_utc_offset()
 
 def get_start_of_day_in_utc_time(dt=datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)):
     """
     """
+    # Start of day in local time
     dt = dt.replace(hour=0, minute=0, second=0, microsecond=0)
     return dt - get_utc_offset()
 

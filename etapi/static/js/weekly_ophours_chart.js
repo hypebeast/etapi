@@ -29,11 +29,11 @@ $(document).ready(function () {
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormatter: function () {
-                    var duration = moment.duration(this.y, 'seconds');
+                    var duration = moment.duration(this.y, 'milliseconds');
 
                     var durationString = duration.hours() + ' h ' + duration.minutes() + ' m ' + duration.seconds() + ' s';
-                    return '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                            '<td style="padding:0"><b>' + durationString + '</b></td></tr>';
+                    return '<tr><td style="color:{series.color};padding:0">Laufzeit: </td>' +
+                            '<td style="padding:0">&nbsp<b>' + durationString + '</b></td></tr>';
                 },
                 footerFormat: '</table>',
                 shared: true,
@@ -47,7 +47,7 @@ $(document).ready(function () {
             },
             series: [
                 {
-                    name: 'Betriebsstunden',
+                    name: 'Laufzeit',
                     data: operating_hours_data
                 }
             ]

@@ -6,23 +6,11 @@ from etapi.database import db
 from etapi.weather.helpers import get_current_weather, get_max_temp_today, get_min_temp_today, get_average_temp_today
 from etapi.kesseldata.helpers import get_pellets_consumption_today
 from etapi.kesseldata.helpers import get_pellets_consumption_last_n_days
-from etapi.kesseldata.helpers import get_pellets_total_consumption
-from etapi.kesseldata.helpers import get_pellets_kessel_stock
-from etapi.kesseldata.helpers import get_pellets_total_stock
-from etapi.kesseldata.helpers import get_operating_hours_total
+from etapi.kesseldata.helpers import get_kessel_current_data
+from etapi.kesseldata.helpers import get_puffer_current_data
+from etapi.kesseldata.helpers import get_lager_current_data
 from etapi.kesseldata.helpers import get_operating_hours_last_n_days
-from etapi.kesseldata.helpers import get_puffer_temperature_top
-from etapi.kesseldata.helpers import get_puffer_temperature_bottom
-from etapi.kesseldata.helpers import get_puffer_current_temp_water_storage
-from etapi.kesseldata.helpers import get_kessel_current_temp
-from etapi.kesseldata.helpers import get_kessel_current_pressure
-from etapi.kesseldata.helpers import get_kessel_current_feed_line_temp
-from etapi.kesseldata.helpers import get_kessel_current_exhaust_temp
-from etapi.kesseldata.helpers import get_kessel_current_exhaust_blower
-from etapi.kesseldata.helpers import get_kessel_current_residual_oxygen
-from etapi.kesseldata.helpers import get_kessel_usage_since_service
-from etapi.kesseldata.helpers import get_kessel_usage_since_deashing
-from etapi.kesseldata.helpers import get_kessel_usage_since_box_exhaustion
+
 
 public = Blueprint('public', __name__, static_folder="../static")
 
@@ -35,29 +23,56 @@ def home():
     min_temp = get_min_temp_today()
     avg_temp = get_average_temp_today()
 
+    kessel_data = get_kessel_current_data()
+    puffer_data = get_puffer_current_data()
+    lager_data = get_lager_current_data()
+
     pellets_today = get_pellets_consumption_today()
     pellets_last_week = get_pellets_consumption_last_n_days(7)
-    pellets_kessel_stock = get_pellets_kessel_stock()
-    pellets_total_consumption = get_pellets_total_consumption()
-    pellets_total_stock = get_pellets_total_stock()
-    kessel_temp = get_kessel_current_temp()
-    kessel_pressure = get_kessel_current_pressure()
-    kessel_feed_line_temp = get_kessel_current_feed_line_temp()
-    kessel_exhaust_temp = get_kessel_current_exhaust_temp()
-    kessel_exhaust_blower = get_kessel_current_exhaust_blower()
-    kessel_residual_oxygen = get_kessel_current_residual_oxygen()
-    kessel_usage_since_service = get_kessel_usage_since_service()
-    if kessel_usage_since_service and kessel_usage_since_service > 0:
-        kessel_usage_since_service = kessel_usage_since_service / 10
-    kessel_usage_since_deashing = get_kessel_usage_since_deashing()
-    kessel_usage_since_box_exhaustion = get_kessel_usage_since_box_exhaustion()
 
-    operating_hours = get_operating_hours_total()
+    pellets_kessel_stock = None
+    pellets_total_consumption = None
+    pellets_total_stock = None
+    kessel_temp = None
+    kessel_pressure = None
+    kessel_feed_line_temp = None
+    kessel_exhaust_temp = None
+    kessel_exhaust_blower = None
+    kessel_residual_oxygen = None
+    kessel_usage_since_service = None
+    kessel_usage_since_deashing = None
+    kessel_usage_since_box_exhaustion = None
+    operating_hours = None
+
+    if kessel_data:
+        pellets_total_consumption = kessel_data.pellets_total
+        pellets_kessel_stock = kessel_data.reservoir_capacity
+        kessel_temp = kessel_data.temperature
+        kessel_pressure = kessel_data.pressure
+        kessel_feed_line_temp = kessel_data.feed_line_temperature
+        kessel_exhaust_temp = kessel_data.exhaust_temperature
+        kessel_exhaust_blower = kessel_data.exhaust_blower
+        kessel_residual_oxygen = kessel_data.residual_oxygen
+        kessel_usage_since_service = kessel_data.usage_since_service
+        if kessel_usage_since_service and kessel_usage_since_service > 0:
+            kessel_usage_since_service = kessel_usage_since_service / 10
+        kessel_usage_since_deashing = kessel_data.usage_since_deashing
+        kessel_usage_since_box_exhaustion = kessel_data.usage_since_box_exhaustion
+        operating_hours = kessel_data.operating_hours
+
+    if lager_data:
+        pellets_total_stock = lager_data.stock
+
     operating_hours_last_week = get_operating_hours_last_n_days()
 
-    puffer_temperature_top = get_puffer_temperature_top()
-    puffer_temperature_bottom = get_puffer_temperature_bottom()
-    puffer_temp_water_storage = get_puffer_current_temp_water_storage()
+    puffer_temperature_top = None
+    puffer_temperature_bottom = None
+    puffer_temp_water_storage = None
+
+    if puffer_data:
+        puffer_temperature_top = puffer_data.temperature_top
+        puffer_temperature_bottom = puffer_data.temperature_bottom
+        puffer_temp_water_storage = puffer_data.hot_water_storage_temp
 
     return render_template("public/home.html",
                             current_temp=current_temp, max_temp_today=max_temp,

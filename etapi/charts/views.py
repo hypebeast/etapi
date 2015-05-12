@@ -62,14 +62,12 @@ def weekly():
     pellets_consumption_series = get_daily_pellets_consumption_last_7_days()
     operating_hours_series = get_daily_operating_hours_last_7_days()
 
-    print pellets_consumption_series
+    print operating_hours_series
 
     if not pellets_consumption_series and not operating_hours_series:
-         return render_template("charts/weekly.html",
-                                    pellets_consumption=pellets_consumption,
-                                    operating_hours=operating_hours,
-                                    no_data=True)
+         return render_template("charts/weekly.html", no_data=True)
 
+    # Calculate the timestamps
     timeseries_data = pellets_consumption_series if pellets_consumption_series else operating_hours_series
     timestamps = [1000 * calendar.timegm(datetime.strptime(d.created_at, '%Y-%m-%d').timetuple()) for d in timeseries_data]
 

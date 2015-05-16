@@ -30,6 +30,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span><strong>Pellets Consumption</strong></span>
+                        <span class="pull-right"><strong>Total: {{ total_pellets }} kg</strong></span>
                     </div>
                     <div class="panel-body">
                         <div id="weekly-pellets-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
@@ -43,6 +44,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span><strong>Operating Hours</strong></span>
+                        <span class="pull-right"><strong>Total: {{ total_oh | pretty_seconds_hhmmss if total_oh or '-' }} </strong></span>
                     </div>
                     <div class="panel-body">
                         <div id="weekly-ophours-chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>

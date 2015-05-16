@@ -73,12 +73,16 @@ def weekly():
 
     if pellets_consumption_series:
         pellets_consumption = [list(x) for x in zip(timestamps, [(int(d.pellets_consumption or 0)) for d in pellets_consumption_series])]
+        total_pellets = sum(x.pellets_consumption for x in pellets_consumption_series)
     if operating_hours_series:
         operating_hours = [list(x) for x in zip(timestamps, [(int((d.operating_hours or 0) * 1000)) for d in operating_hours_series])]
+        total_oh = sum(x.operating_hours for x in operating_hours_series)
 
     return render_template("charts/weekly.html",
                             pellets_consumption=pellets_consumption,
-                            operating_hours=operating_hours)
+                            operating_hours=operating_hours,
+                            total_pellets=total_pellets,
+                            total_oh=total_oh)
 
 
 @charts.route("/monthly")

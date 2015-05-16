@@ -28,7 +28,7 @@ def home():
     lager_data = get_lager_current_data()
 
     pellets_today = get_pellets_consumption_today()
-    pellets_last_week = get_pellets_consumption_last_n_days(7)
+    pellets_last_week = get_pellets_consumption_last_n_days(6)
 
     pellets_kessel_stock = None
     pellets_total_consumption = None

@@ -40,6 +40,12 @@ charts_weekly_js = Bundle(
     output="public/js/weekly_charts.js"
 )
 
+charts_monthly_js = Bundle(
+    "js/monthly_ophours_chart.js",
+    "js/monthly_pellets_chart.js",
+    output="public/js/monthly_charts.js"
+)
+
 assets = Environment()
 
 assets.register("js_all", js)
@@ -47,3 +53,4 @@ assets.register("css_all", css)
 assets.register("js_weather", weather_js)
 assets.register("js_charts_daily", charts_daily_js)
 assets.register("js_charts_weekly", charts_weekly_js)
+assets.register("js_charts_monthly", charts_monthly_js)

@@ -1,11 +1,11 @@
 $(document).ready(function () {
     $(function () {
-        $('#weekly-pellets-chart').highcharts({
+        $('#monthly-pellets-chart').highcharts({
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Last 7 Days Pellets Consumption'
+                text: 'Last 30 Days Pellets Consumption'
             },
             xAxis: {
                 type: 'datetime'

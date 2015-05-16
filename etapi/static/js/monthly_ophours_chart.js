@@ -1,11 +1,11 @@
 $(document).ready(function () {
     $(function () {
-        $('#weekly-ophours-chart').highcharts({
+        $('#monthly-ophours-chart').highcharts({
             chart: {
                 type: 'column'
             },
             title: {
-                text: 'Last 7 Days Operating Hours'
+                text: 'Last 30 Days Operating Hours'
             },
             xAxis: {
                 type: 'datetime'

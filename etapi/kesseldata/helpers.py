@@ -31,16 +31,22 @@ def get_pellets_consumption_last_n_days(n=7):
     return Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption')).filter(
         Kessel.created_at >= end_date).first().pellets_consumption
 
-def get_daily_pellets_consumption_last_7_days():
+def get_daily_pellets_consumption_last_n_days(n=30):
     """
-    Returns an array with the daily pellets consumption for the last seven days.
+    Returns an array with the daily pellets consumption for the last n days.
     """
     end_date = datetime.utcnow()
-    start_date = (end_date - timedelta(days=6)).strftime('%Y-%m-%d')
+    start_date = (end_date - timedelta(days=n)).strftime('%Y-%m-%d')
     return Kessel.query.with_entities((func.max(Kessel.pellets_total) - func.min(Kessel.pellets_total)).label('pellets_consumption'),
                                             func.strftime('%Y-%m-%d', Kessel.created_at).label('created_at')).filter(
         Kessel.created_at >= start_date).filter(
         Kessel.created_at <= end_date).group_by(func.strftime('%Y-%m-%d', Kessel.created_at)).all()
+
+def get_daily_pellets_consumption_last_7_days():
+    """
+    Returns an array with the daily pellets consumption for the last seven days.
+    """
+    return get_daily_pellets_consumption_last_n_days(6)
 
 def get_kessel_daily_series(dt=datetime.now()):
     """
@@ -85,16 +91,22 @@ def get_operating_hours_for_day(dt=datetime.now()):
 
     return result
 
-def get_daily_operating_hours_last_7_days():
+def get_daily_operating_hours_last_n_days(n=30):
     """
-    Returns an array with the daily operating_hours for the last seven days.
+    Returns an array with the daily operating hours for the last n days.
     """
     end_date = datetime.utcnow()
-    start_date = (end_date - timedelta(days=6)).strftime('%Y-%m-%d')
+    start_date = (end_date - timedelta(days=n)).strftime('%Y-%m-%d')
     return Kessel.query.with_entities((func.max(Kessel.operating_hours) - func.min(Kessel.operating_hours)).label('operating_hours'),
                                             func.strftime('%Y-%m-%d', Kessel.created_at).label('created_at')).filter(
         Kessel.created_at >= start_date).filter(
         Kessel.created_at <= end_date).group_by(func.strftime('%Y-%m-%d', Kessel.created_at)).all()
+
+def get_daily_operating_hours_last_7_days():
+    """
+    Returns an array with the daily operating hours for the last seven days.
+    """
+    return get_daily_operating_hours_last_n_days(6)
 
 def get_operating_hours_last_n_days(n=6):
     """

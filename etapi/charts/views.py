@@ -6,12 +6,16 @@ from flask import (Blueprint, request, render_template)
 
 from etapi.lib.helpers import get_timestamps
 from etapi.lib.helpers import get_todays_date
-from etapi.kesseldata.helpers import get_pellets_consumption_for_day
-from etapi.kesseldata.helpers import get_puffer_daily_series
-from etapi.kesseldata.helpers import get_kessel_daily_series
-from etapi.kesseldata.helpers import get_daily_pellets_consumption_last_7_days
-from etapi.kesseldata.helpers import get_daily_operating_hours_last_7_days
-from etapi.kesseldata.helpers import get_operating_hours_for_day
+from etapi.kesseldata.helpers import (
+    get_pellets_consumption_for_day,
+    get_daily_operating_hours_last_n_days,
+    get_puffer_daily_series,
+    get_kessel_daily_series,
+    get_daily_pellets_consumption_last_7_days,
+    get_daily_operating_hours_last_7_days,
+    get_operating_hours_for_day,
+    get_daily_pellets_consumption_last_n_days
+)
 
 
 charts = Blueprint('charts', __name__, url_prefix='/charts',
@@ -57,7 +61,14 @@ def daily(date=get_todays_date().strftime('%Y-%m-%d')):
                             operating_hours=operating_hours)
 
 @charts.route("/weekly")
-def weekly():
+@charts.route("/weekly/<date>")
+def weekly(date=get_todays_date().strftime('%Y-%W')):
+    # TODO
+    try:
+        current_date = datetime.strptime(date, '%Y-%W')
+    except ValueError, TypeError:
+        current_date = get_todays_date().strftime('%Y-%W')
+
     pellets_consumption = []
     operating_hours = []
 
@@ -65,7 +76,7 @@ def weekly():
     operating_hours_series = get_daily_operating_hours_last_7_days()
 
     if not pellets_consumption_series and not operating_hours_series:
-         return render_template("charts/weekly.html", no_data=True)
+         return render_template("charts/monthly.html", no_data=True)
 
     # Calculate the timestamps
     timeseries_data = pellets_consumption_series if pellets_consumption_series else operating_hours_series
@@ -87,4 +98,30 @@ def weekly():
 
 @charts.route("/monthly")
 def monthly():
-    pass
+    pellets_consumption = []
+    operating_hours = []
+
+    pellets_consumption_series = get_daily_pellets_consumption_last_n_days(29)
+    operating_hours_series = get_daily_operating_hours_last_n_days(29)
+
+    if not pellets_consumption_series and not operating_hours_series:
+        return render_template("charts/monthly.html", no_data=True)
+
+    # Calculate the timestamps
+    timeseries_data = pellets_consumption_series if pellets_consumption_series else operating_hours_series
+    timestamps = [1000 * calendar.timegm(datetime.strptime(d.created_at, '%Y-%m-%d').timetuple()) for d in timeseries_data]
+
+    if pellets_consumption_series:
+        pellets_consumption = [list(x) for x in zip(timestamps, [(int(d.pellets_consumption or 0)) for d in pellets_consumption_series])]
+        total_pellets = sum(x.pellets_consumption for x in pellets_consumption_series)
+        average_pellets = float(total_pellets / len(pellets_consumption_series))
+    if operating_hours_series:
+        operating_hours = [list(x) for x in zip(timestamps, [(int((d.operating_hours or 0) * 1000)) for d in operating_hours_series])]
+        total_oh = sum(x.operating_hours for x in operating_hours_series)
+        average_oh = int(total_oh / len(operating_hours_series))
+
+    return render_template("charts/monthly.html",
+                            pellets_consumption=pellets_consumption,
+                            operating_hours=operating_hours,
+                            total_pellets=total_pellets, average_pellets=average_pellets,
+                            total_oh=total_oh, average_oh=average_oh)

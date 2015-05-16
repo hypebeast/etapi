@@ -11,6 +11,7 @@ from etapi.kesseldata.helpers import get_puffer_daily_series
 from etapi.kesseldata.helpers import get_kessel_daily_series
 from etapi.kesseldata.helpers import get_daily_pellets_consumption_last_7_days
 from etapi.kesseldata.helpers import get_daily_operating_hours_last_7_days
+from etapi.kesseldata.helpers import get_operating_hours_for_day
 
 
 charts = Blueprint('charts', __name__, url_prefix='/charts',
@@ -27,7 +28,6 @@ def daily(date=get_todays_date().strftime('%Y-%m-%d')):
     yesterday = current_date - timedelta(days=1)
     tomorrow = current_date + timedelta(days=1)
 
-
     kessel_data = get_kessel_daily_series(current_date)
     timestamps_kessel = get_timestamps(kessel_data)
 
@@ -43,6 +43,7 @@ def daily(date=get_todays_date().strftime('%Y-%m-%d')):
     puffer_temp_hot_water_storage = [list(x) for x in zip(timestamps_puffer, [(int(d.hot_water_storage_temp or 0)) for d in puffer_data])]
 
     pellets_usage_today = get_pellets_consumption_for_day(current_date)
+    operating_hours = get_operating_hours_for_day(current_date)
 
     return render_template("charts/daily.html",
                             today=current_date, yesterday=yesterday, tomorrow=tomorrow,
@@ -52,7 +53,8 @@ def daily(date=get_todays_date().strftime('%Y-%m-%d')):
                             kessel_temp=kessel_temp,
                             kessel_pressure=kessel_pressure,
                             kessel_feed_line_temperature=kessel_feed_line_temperature,
-                            pellets_usage_today=pellets_usage_today)
+                            pellets_usage_today=pellets_usage_today,
+                            operating_hours=operating_hours)
 
 @charts.route("/weekly")
 def weekly():
@@ -61,8 +63,6 @@ def weekly():
 
     pellets_consumption_series = get_daily_pellets_consumption_last_7_days()
     operating_hours_series = get_daily_operating_hours_last_7_days()
-
-    print operating_hours_series
 
     if not pellets_consumption_series and not operating_hours_series:
          return render_template("charts/weekly.html", no_data=True)
@@ -80,3 +80,7 @@ def weekly():
                             pellets_consumption=pellets_consumption,
                             operating_hours=operating_hours)
 
+
+@charts.route("/monthly")
+def monthly():
+    pass

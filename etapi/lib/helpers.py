@@ -7,7 +7,22 @@ import tzlocal
 
 
 def get_todays_date():
+    """
+    Returns the todays date.
+    """
     return datetime.now()
+
+def get_current_week_number():
+    """
+    Returns the current week number.
+    """
+    return get_week_number()
+
+def get_week_number(dt=datetime.now()):
+    """
+    Returns the week number for the given date.
+    """
+    return dt.date().isocalendar()[1]
 
 def get_timestamps(series):
     """

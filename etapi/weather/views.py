@@ -14,7 +14,10 @@ weather = Blueprint('weather', __name__, url_prefix='/weather',
 
 @weather.route("/")
 @weather.route("/<date>")
-def index(date=get_todays_date().strftime('%Y-%m-%d')):
+def index(date):
+    if not date:
+        date = get_todays_date().strftime('%Y-%m-%d')
+
     try:
         current_date = datetime.strptime(date, '%Y-%m-%d')
     except ValueError, TypeError:

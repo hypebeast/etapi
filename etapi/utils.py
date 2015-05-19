@@ -47,16 +47,22 @@ def pretty_date(dt, default=None):
     return default
 
 def pretty_seconds_to_hhmmss(seconds):
+    if not seconds:
+        return None
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
     return "%d h %d m %s s" % (h, m, s)
 
 def pretty_seconds_to_hhmm(seconds):
+    if not seconds:
+        return None
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
     return "%d h %d m" % (h, m)
 
 def pretty_seconds_to_hh(seconds):
+    if not seconds:
+        return None
     m, s = divmod(seconds, 60)
     h, m = divmod(m, 60)
     return "%d h" % (h)

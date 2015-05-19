@@ -8,7 +8,7 @@ import tzlocal
 
 def get_todays_date():
     """
-    Returns the todays date.
+    Returns the todays datetime.
     """
     return datetime.now()
 

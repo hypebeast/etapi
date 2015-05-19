@@ -23,7 +23,10 @@ charts = Blueprint('charts', __name__, url_prefix='/charts',
 
 @charts.route("/daily")
 @charts.route("/daily/<date>")
-def daily(date=get_todays_date().strftime('%Y-%m-%d')):
+def daily(date=None):
+    if not date:
+        date = get_todays_date().strftime('%Y-%m-%d')
+
     try:
         current_date = datetime.strptime(date, '%Y-%m-%d')
     except ValueError, TypeError:
@@ -125,3 +128,9 @@ def monthly():
                             operating_hours=operating_hours,
                             total_pellets=total_pellets, average_pellets=average_pellets,
                             total_oh=total_oh, average_oh=average_oh)
+
+@charts.route("/yearly")
+def yearly():
+    pass
+
+    pass

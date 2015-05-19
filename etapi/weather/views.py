@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
 
-from flask import (Blueprint, request, render_template)
+from flask import (Blueprint, request, render_template, redirect, url_for)
 
 from etapi.lib.helpers import get_timestamps
 from etapi.lib.helpers import get_todays_date
@@ -14,7 +14,7 @@ weather = Blueprint('weather', __name__, url_prefix='/weather',
 
 @weather.route("/")
 @weather.route("/<date>")
-def index(date):
+def index(date=None):
     if not date:
         date = get_todays_date().strftime('%Y-%m-%d')
 

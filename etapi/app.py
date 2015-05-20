@@ -22,12 +22,14 @@ from etapi.utils import (
 from .public import public
 from .weather import weather
 from .charts import charts
+from .tables import tables
 
 
 DEFAULT_BLUEPRINTS = (
     public,
     weather,
     charts,
+    tables,
 )
 
 def create_app(config_object=ProdConfig, blueprints=None):

@@ -311,3 +311,12 @@
 </div>
 {% endblock %}
 
+{% block scripts %}
+    <script>
+        $('#side-menu').find('a').each(function (i) {
+            $(this).removeClass('active');
+        });
+        $('#dashboard').addClass("active");
+    </script>
+{% endblock %}
+

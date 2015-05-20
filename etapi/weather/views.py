@@ -12,6 +12,7 @@ from etapi.weather.helpers import get_daily_temperature_series
 weather = Blueprint('weather', __name__, url_prefix='/weather',
                     static_folder="../static")
 
+
 @weather.route("/")
 @weather.route("/<date>")
 def index(date=None):
@@ -27,6 +28,9 @@ def index(date=None):
     tomorrow = current_date + timedelta(days=1)
 
     temp_data = get_daily_temperature_series(current_date)
+
+    print temp_data
+
     timestamps_temp = get_timestamps(temp_data)
 
     daily_chart_data = [list(x) for x in zip(timestamps_temp, [(float(d.temp or 0 )) for d in temp_data])]

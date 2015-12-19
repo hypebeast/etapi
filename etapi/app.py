@@ -23,6 +23,7 @@ from .public import public
 from .weather import weather
 from .charts import charts
 from .tables import tables
+from .api import api
 
 
 DEFAULT_BLUEPRINTS = (
@@ -30,6 +31,7 @@ DEFAULT_BLUEPRINTS = (
     weather,
     charts,
     tables,
+    api
 )
 
 def create_app(config_object=ProdConfig, blueprints=None):

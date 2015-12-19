@@ -61,6 +61,7 @@ def kesselData():
     residual_oxygen = getValueOrNone(getUserVar("/40/10021/0/0/12164"))
     if residual_oxygen:
         residual_oxygen = float(residual_oxygen.replace(',', '.'))
+    status = getStrValueOrNone(getUserVar("/40/10021/0/0/12000"))
 
     kessel = Kessel(operating_hours=vollaststunden,
                     pellets_total=gesamtverbrauch,
@@ -73,7 +74,8 @@ def kesselData():
                     feed_line_temperature=feed_line_temperature,
                     exhaust_temperature=exhaust_temperature,
                     exhaust_blower=exhaust_blower,
-                    residual_oxygen=residual_oxygen)
+                    residual_oxygen=residual_oxygen,
+                    status=status)
 
     with app.app_context():
         db.session.add(kessel)

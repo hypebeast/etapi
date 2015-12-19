@@ -171,7 +171,6 @@ def configure_nginx():
     if exists('/etc/nginx/sites-enabled/default'):
         sudo('rm /etc/nginx/sites-enabled/default')
     if exists('/etc/nginx/sites-enabled/etapi') is False:
-        sudo('touch /etc/nginx/sites-available/etapi')
         sudo('ln -s /etc/nginx/sites-available/etapi' +
              ' /etc/nginx/sites-enabled/etapi')
     with lcd(local_config_dir):
@@ -213,8 +212,9 @@ def configure_git():
             sudo('chown pi:pi ' + remote_git_dir + ' -R')
 
 def bootstrap():
-    #install_requirements()
+    install_requirements()
     install_node()
+    # TODO: install bower
     create_project_dir()
     configure_nginx()
     configure_supervisor()

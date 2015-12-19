@@ -27,6 +27,7 @@ class Kessel(SurrogatePK, Model):
     exhaust_temperature = Column(db.Integer(), nullable=True)
     exhaust_blower = Column(db.Integer(), nullable=True)
     residual_oxygen = Column(db.Float(), nullable=True)
+    status = Column(db.String(), nullable=True)
 
 
 class Puffer(SurrogatePK, Model):
@@ -49,4 +50,3 @@ class Lager(SurrogatePK, Model):
 
 def __init__(self):
     db.Model.__init__(self)
-

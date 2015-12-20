@@ -12,6 +12,12 @@ def get_todays_date():
     """
     return datetime.now()
 
+def get_start_of_today():
+    """
+    Returns the start of today in local time.
+    """
+    return datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+
 def get_current_week_number():
     """
     Returns the current week number.
@@ -45,7 +51,7 @@ def get_start_of_day_in_utc_time(dt=datetime.now().replace(hour=0, minute=0, sec
     return dt - get_utc_offset()
 
 def get_start_of_week(dt=datetime.now()):
-    "Returns the start of the week for the given date. It date returned is in UTC time."
+    "Returns the start of the week for the given date. The datetime returned is in UTC time."
     start = dt - timedelta(days=dt.weekday())
     return start.replace(hour=0, minute=0, second=0, microsecond=0) - get_utc_offset()
 

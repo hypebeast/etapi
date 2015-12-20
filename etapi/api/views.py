@@ -23,7 +23,8 @@ from etapi.weather.helpers import (
 
 from etapi.lib.helpers import (
     get_start_of_week,
-    get_start_of_month
+    get_start_of_month,
+    get_start_of_today
 )
 
 
@@ -34,13 +35,14 @@ def status():
     start_of_week = get_start_of_week()
     start_of_month = get_start_of_month()
     end_date = datetime.utcnow()
+    today = get_start_of_today()
     data = {}
 
     data['status'] = get_current_status() or ''
 
     data['today'] = {}
-    data['today']['pellets_consumption'] = get_pellets_consumption_for_day()
-    data['today']['operating_hours'] = get_operating_hours_for_day()
+    data['today']['pellets_consumption'] = get_pellets_consumption_for_day(today)
+    data['today']['operating_hours'] = get_operating_hours_for_day(today)
 
     data['week'] = {}
     data['week']['pellets_consumption'] = get_pellets_consumption_for_period(start_of_week, end_date)
@@ -78,10 +80,11 @@ def pellets():
     start_of_week = get_start_of_week()
     start_of_month = get_start_of_month()
     end_date = datetime.utcnow()
+    today = get_start_of_today()
     data = {}
 
     data['stock'] = lager_data.stock
-    data['consumption_today'] = get_pellets_consumption_for_day()
+    data['consumption_today'] = get_pellets_consumption_for_day(today)
     data['consumption_week'] = get_pellets_consumption_for_period(start_of_week, end_date)
     data['consumption_month'] = get_pellets_consumption_for_period(start_of_month, end_date)
     data['consumption_total'] = kessel_data.pellets_total
